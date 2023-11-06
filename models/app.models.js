@@ -20,3 +20,24 @@ exports.insertNewUser = (newUser) => {
       return rows[0];
     });
 };
+
+exports.updateUser = (edit, userId) => {
+  const setValues = Object.values(edit);
+  //setValues.push(Object.values(edit)[0]);
+  setValues.push(userId);
+
+  console.log(setValues);
+
+  return db
+    .query(
+      `UPDATE users
+         SET phone_number = $1
+         WHERE user_id = $2
+         RETURNING*;`,
+      setValues
+    )
+    .then(({ rows }) => {
+      console.log(rows);
+      return rows[0];
+    });
+};

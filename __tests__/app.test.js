@@ -72,3 +72,24 @@ describe("POST /api/users", () => {
       });
   });
 });
+
+describe.only("PATCH /api/users/:user_id", () => {
+  test("returns 200 status code and sends back the user object with updated details", () => {
+    const patchUser = { phone_number: "07950487263" };
+    return request(app)
+      .patch("/api/users/2")
+      .send(patchUser)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.updatedUser).toMatchObject({
+          phone_number: "07950487263",
+          first_name: "Jane",
+          surname: "Smith",
+          is_elder: false,
+          postcode: "M2 2BB",
+          avatar_url: "https://example.com/avatars/janesmith.jpg",
+        });
+      });
+  });
+  test("returns 200 status code and sends back the user object with updated details when user tries to patch more than 1 detail", () => {});
+});
