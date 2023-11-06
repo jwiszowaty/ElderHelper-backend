@@ -1,0 +1,58 @@
+module.exports = [
+  {
+    job_title: "Companionship",
+    job_desc:
+      "Looking for someone to keep me company and chat with me in the evenings.",
+    posted_date: "2023-11-06",
+    expiry_date: "2023-11-20",
+    elder_id: 1,
+    helper_id: 7,
+    status_id: 2,
+  },
+  {
+    job_title: "Food Shopping",
+    job_desc: "Need help with food shopping once a week.",
+    posted_date: "2023-11-08",
+    expiry_date: "2023-11-15",
+    elder_id: 2,
+    helper_id: 10,
+    status_id: 1,
+  },
+  {
+    job_title: "Medication Reminder",
+    job_desc: "Require assistance in taking my medications at the right times.",
+    posted_date: "2023-11-10",
+    expiry_date: "2023-11-25",
+    elder_id: 3,
+    helper_id: 13,
+    status_id: 3,
+  },
+  {
+    job_title: "Transportation Assistance",
+    job_desc:
+      "Looking for someone to drive me to doctor's appointments and grocery stores.",
+    posted_date: "2023-11-12",
+    expiry_date: "2023-11-26",
+    elder_id: 4,
+    helper_id: 14,
+    status_id: 2,
+  },
+  {
+    job_title: "Meal Preparation",
+    job_desc: "Need help with preparing and cooking meals for the week.",
+    posted_date: "2023-11-14",
+    expiry_date: "2023-11-21",
+    elder_id: 8,
+    helper_id: 5,
+    status_id: 1,
+  },
+  {
+    job_title: "House Cleaning",
+    job_desc: "Seeking assistance with general house cleaning and organizing.",
+    posted_date: "2023-11-16",
+    expiry_date: "2023-11-30",
+    elder_id: 6,
+    helper_id: 16,
+    status_id: 4,
+  },
+];
