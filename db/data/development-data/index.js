@@ -1,3 +1,4 @@
-exports.users = require('./users.js');
-exports.jobs = require('./jobs.js');
-exports.status = require('./status.js');
+exports.jobsData = require('./jobs.js');
+exports.userData = require('./users.js');
+exports.statusData = require('./status.js');
+
