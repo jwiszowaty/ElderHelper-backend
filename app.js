@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+
 const {
   getJobs,
   postJob,
@@ -9,7 +10,8 @@ const {
   patchUser,
   getAcceptedHelperJobs,
   deleteJob,
-  getExistingUser
+  getExistingUser,
+  getJobsByElder
 } = require("./controllers/app.controllers.js");
 
 const {
@@ -31,6 +33,8 @@ app.post("/api/jobs", postJob);
 app.patch("/api/jobs/:job_id", patchJob);
 
 app.delete('/api/jobs/:job_id', deleteJob)
+
+app.get('/api/jobs/elder/:elder_id', getJobsByElder)
 
 app.post("/api/users", postNewUser);
 

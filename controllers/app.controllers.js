@@ -8,6 +8,8 @@ const {
   fetchExistingUser,
   fetchAcceptedHelperJobs,
   jobToDelete,
+  fetchJobsByElder, 
+  fetchJobsByPostCode
 } = require("../models/app.models.js");
 
 exports.getJobs = (req, res, next) => {
@@ -59,7 +61,7 @@ exports.patchJob = (req, res, next) => {
 exports.deleteJob = (req, res, next) => {
   const { job_id } = req.params;
   fetchSingleJob(job_id)
-    .then(() => {
+  .then(() => {
       jobToDelete(job_id);
     })
     .then(() => {
@@ -69,6 +71,15 @@ exports.deleteJob = (req, res, next) => {
       next(err);
     });
 };
+
+exports.getJobsByElder = (req, res, next) => {
+  const {elder_id} = req.params;
+  fetchJobsByElder(elder_id)
+  .then((jobs) => {
+    res.status(200).send(jobs)
+  })
+  .catch((err) => {next (err)})
+}
 
 exports.postNewUser = (req, res, next) => {
   const newUser = req.body;

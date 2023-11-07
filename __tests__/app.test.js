@@ -218,6 +218,41 @@ describe("Deleting jobs from the board", () => {
   });
 });
 
+describe("GET jobs by elder id", () => {
+  test('GET 200 responds jobs the elder has posted', () => {
+    return request(app)
+      .get("/api/jobs/elder/1")
+      .expect(200)
+      .then(({body}) => {
+        expect(body.length).toBe(1)
+      })
+  });
+  test('GET 200 responds with empty array if elder has no jobs posted', () => {
+    return request(app)
+    .get("/api/jobs/elder/5")
+    .expect(200)
+    .then(({body}) => {
+      expect(body.length).toBe(0)
+    })
+  })
+  test('GET 404 responds with error message when valid but non existent id is passed', () => {
+    return request(app)
+    .get("/api/jobs/elder/59127")
+    .expect(404)
+    .then(({body}) => {
+      expect(body.message).toBe("User does not exist")
+    })
+  })
+  test('GET 404 responds with error message when invalid id is passed', () => {
+    return request(app)
+    .get("/api/jobs/elder/abc")
+    .expect(400)
+    .then(({body}) => {
+      expect(body.message).toBe("bad request")
+    })
+  })
+});
+
 describe("Route does not exist", () => {
   test('GET 404 responds with error message "Path not found!"', () => {
     return request(app)

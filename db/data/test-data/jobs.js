@@ -28,7 +28,8 @@ module.exports = [
     elder_id: 7,
     helper_id: 6,
     status_id: 3,
-    postcode: "M4 4DD",
+    postcode: "M40 4DD",
+
   },
   {
     job_title: "Transportation Assistance",
