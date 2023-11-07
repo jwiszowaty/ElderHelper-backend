@@ -7,10 +7,11 @@ const {
   patchJob,
   postNewUser,
   patchUser,
-  getExistingUser,
   getAcceptedHelperJobs,
-  deleteJob
+  deleteJob,
+  getExistingUser
 } = require("./controllers/app.controllers.js");
+
 const {
   handlePSQLErrors,
   handleCustomErrors,
@@ -34,6 +35,8 @@ app.delete('/api/jobs/:job_id', deleteJob)
 app.post("/api/users", postNewUser);
 
 app.patch("/api/users/:user_id", patchUser);
+
+app.get("/api/users/:phone_number", getExistingUser);
 
 app.use(handlePSQLErrors, handleCustomErrors, handleServerErrors);
 

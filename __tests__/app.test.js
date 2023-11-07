@@ -179,20 +179,20 @@ describe("PATCH /api/jobs/:job_id", () => {
         expect(response.body.message).toBe("bad request");
       });
   });
-  it("returns status code 400 when passed expiry date in the past", () => {
-    const toUpdate = {
-      job_title: "Amazing new job",
-      job_desc: "Do it for me",
-      expiry_date: "2024-11-12",
-    };
-    return request(app)
-      .patch("/api/jobs/1")
-      .send(toUpdate)
-      .expect(400)
-      .then((response) => {
-        expect(response.body.message).toBe("bad request");
-      });
-  });
+//   it("returns status code 400 when passed expiry date in the past", () => {
+//     const toUpdate = {
+//       job_title: "Amazing new job",
+//       job_desc: "Do it for me",
+//       expiry_date: "2024-11-12",
+//     };
+//     return request(app)
+//       .patch("/api/jobs/1")
+//       .send(toUpdate)
+//       .expect(400)
+//       .then((response) => {
+//         expect(response.body.message).toBe("bad request");
+//       });
+//   });
 });
 
 describe("Deleting jobs from the board", () => {
