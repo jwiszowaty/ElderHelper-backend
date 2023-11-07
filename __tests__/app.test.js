@@ -220,7 +220,6 @@ test("404: returns error when comment_id does not exist", () => {
 })
 });
 
-
 describe("Route does not exist", () => {
   test('GET 404 responds with error message "Path not found!"', () => {
     return request(app)
@@ -355,7 +354,7 @@ test("PATCH: returns 400 status code if tries to edit a user with an invalid id"
     });
 });
 
-describe.only("GET /api/users/:user_id/:status should get all of a helper users accepted jobs, it will get all the jobs for a particular user filtered by the status", () => {
+describe("GET /api/users/:user_id/:status should get all of a helper users accepted jobs, it will get all the jobs for a particular user filtered by the status", () => {
   test("GET 200 will return an array of job objects if the user is a helper and the job status is accepted", () => {
     return request(app)
       .get("/api/users/7/accepted")
@@ -408,6 +407,41 @@ describe.only("GET /api/users/:user_id/:status should get all of a helper users 
       .expect(404)
       .then(({ body }) => {
         expect(body.message).toBe("Path not found!");
+      });
+  });
+});
+
+describe("GET /api/users/:phone_number to check if a user exists for logging in", () => {
+  test("GET: will return a 200 and a user object if the phone number exists in the db", () => {
+    return request(app)
+      .get("/api/users/1234567")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user).toMatchObject({
+          phone_number: "1234567",
+          first_name: "John",
+          surname: "Doe",
+          is_elder: true,
+          postcode: "M1 1AA",
+          avatar_url: "https://example.com/avatars/johndoe.jpg",
+          profile_msg: "Looking for help with gardening.",
+        });
+      });
+  });
+  test("GET: will return a 404 and a not found message if valid phone number submitted but does not exist ", () => {
+    return request(app)
+      .get("/api/users/1245677")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("user does not exist");
+      });
+  });
+  test("GET: will return a 400 and a bad request if invalid phone number submitted", () => {
+    return request(app)
+      .get("/api/users/not-a-number")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("not a valid phone number");
       });
   });
 });

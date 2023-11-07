@@ -7,10 +7,10 @@ const {
   patchJob,
   postNewUser,
   patchUser,
+  getExistingUser,
   getAcceptedHelperJobs,
   deleteJob
 } = require("./controllers/app.controllers.js");
-
 const {
   handlePSQLErrors,
   handleCustomErrors,
@@ -19,7 +19,6 @@ const {
 
 app.use(express.json());
 
-//jobs endpoints
 app.get("/api/jobs", getJobs);
 
 app.get("/api/jobs/:job_id", getSingleJob);

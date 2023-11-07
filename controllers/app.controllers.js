@@ -5,6 +5,7 @@ const {
   updateJob,
   insertNewUser,
   updateUser,
+  fetchExistingUser,
   fetchAcceptedHelperJobs,
   jobToDelete
 } = require("../models/app.models.js");
@@ -67,7 +68,6 @@ exports.deleteJob = (req, res, next) => {
   .catch((err) => {next(err)})
 }
 
-
 exports.postNewUser = (req, res, next) => {
   const newUser = req.body;
   insertNewUser(newUser)
@@ -85,12 +85,18 @@ exports.patchUser = (req, res, next) => {
 
   updateUser(edit, user_id)
     .then((updatedUser) => {
-      res.status(200).send({ updatedUser });
+      res.status(200).send({ updatedUser: updatedUser });
     })
     .catch((err) => {
       next(err);
     });
 };
+
+exports.getExistingUser = (req, res, next) => {
+  const { phone_number } = req.params;
+  fetchExistingUser(phone_number)
+    .then((existingUser) => {
+      res.status(200).send({ user: existingUser });
 
 exports.getAcceptedHelperJobs = (req, res, next) => {
   const { user_id } = req.params;
@@ -99,6 +105,7 @@ exports.getAcceptedHelperJobs = (req, res, next) => {
   fetchAcceptedHelperJobs(user_id, status)
     .then((acceptedJobs) => {
       res.status(200).send({ acceptedJobs: acceptedJobs });
+
     })
     .catch((err) => {
       next(err);

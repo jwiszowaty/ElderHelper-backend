@@ -61,7 +61,6 @@ exports.jobToDelete = (job_id) => {
   WHERE job_id = $1;`, [job_id])
 }
 
-
 exports.insertNewUser = (newUser) => {
   const newUserArr = Object.values(newUser);
 
@@ -106,6 +105,27 @@ exports.updateUser = (edit, userId) => {
       return rows[0];
     });
 };
+
+exports.fetchExistingUser = (phoneNumber) => {
+  if (/^\d+$/.test(phoneNumber)) {
+    return db
+      .query(
+        `SELECT phone_number, first_name, surname, is_elder, postcode, avatar_url, profile_msg FROM users WHERE phone_number = $1;`,
+        [phoneNumber]
+      )
+      .then(({ rows }) => {
+        if (rows.length === 0) {
+          return Promise.reject({
+            status: 404,
+            message: "user does not exist",
+          });
+        }
+        return rows[0];
+      });
+  } else {
+    return Promise.reject({
+      status: 400,
+      message: "not a valid phone number",
 
 exports.fetchAcceptedHelperJobs = (userId, status) => {
   const statusObj = {
