@@ -109,7 +109,6 @@ const seed = ({ userData, jobsData, statusData }) => {
 
         return db.query(insertJobsQueryString);
       })
-  );
 };
 
 module.exports = seed;
