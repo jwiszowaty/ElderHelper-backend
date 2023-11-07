@@ -7,7 +7,7 @@ const {
   updateUser,
   fetchExistingUser,
   fetchAcceptedHelperJobs,
-  jobToDelete
+  jobToDelete,
 } = require("../models/app.models.js");
 
 exports.getJobs = (req, res, next) => {
@@ -57,16 +57,18 @@ exports.patchJob = (req, res, next) => {
 };
 
 exports.deleteJob = (req, res, next) => {
-  const {job_id} = req.params;
+  const { job_id } = req.params;
   fetchSingleJob(job_id)
-  .then(() => {
-    jobToDelete(job_id)
-  })
-  .then(() => {
-    res.status(204).send()
-  })
-  .catch((err) => {next(err)})
-}
+    .then(() => {
+      jobToDelete(job_id);
+    })
+    .then(() => {
+      res.status(204).send();
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
 
 exports.postNewUser = (req, res, next) => {
   const newUser = req.body;
@@ -96,20 +98,23 @@ exports.getExistingUser = (req, res, next) => {
   const { phone_number } = req.params;
   fetchExistingUser(phone_number)
     .then((existingUser) => {
-      res.status(200).send({ user: existingUser })})
-      .catch((err) => {
-        next(err);
-      });
-    }
+      res.status(200).send({ user: existingUser });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
 
 exports.getAcceptedHelperJobs = (req, res, next) => {
-        const { user_id } = req.params;
-        const { status } = req.params;
-        fetchAcceptedHelperJobs(user_id, status)
-          .then((acceptedJobs) => {
-            res.status(200).send({ acceptedJobs: acceptedJobs });
-          })
-          .catch((err) => {
-            next(err);
-          });
-      };
+  const { user_id } = req.params;
+  const { status } = req.params;
+
+  fetchAcceptedHelperJobs(user_id, status)
+    .then((acceptedJobs) => {
+      console.log(acceptedJobs);
+      res.status(200).send({ acceptedJobs: acceptedJobs });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};

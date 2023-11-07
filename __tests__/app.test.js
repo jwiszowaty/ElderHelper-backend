@@ -179,45 +179,43 @@ describe("PATCH /api/jobs/:job_id", () => {
         expect(response.body.message).toBe("bad request");
       });
   });
-//   it("returns status code 400 when passed expiry date in the past", () => {
-//     const toUpdate = {
-//       job_title: "Amazing new job",
-//       job_desc: "Do it for me",
-//       expiry_date: "2024-11-12",
-//     };
-//     return request(app)
-//       .patch("/api/jobs/1")
-//       .send(toUpdate)
-//       .expect(400)
-//       .then((response) => {
-//         expect(response.body.message).toBe("bad request");
-//       });
-//   });
+  //   it("returns status code 400 when passed expiry date in the past", () => {
+  //     const toUpdate = {
+  //       job_title: "Amazing new job",
+  //       job_desc: "Do it for me",
+  //       expiry_date: "2024-11-12",
+  //     };
+  //     return request(app)
+  //       .patch("/api/jobs/1")
+  //       .send(toUpdate)
+  //       .expect(400)
+  //       .then((response) => {
+  //         expect(response.body.message).toBe("bad request");
+  //       });
+  //   });
 });
 
 describe("Deleting jobs from the board", () => {
-  test('DELETE responds with 204 status code', () => {
-    return request(app)
-      .delete("/api/jobs/1")
-      .expect(204)
+  test("DELETE responds with 204 status code", () => {
+    return request(app).delete("/api/jobs/1").expect(204);
   });
   test("400: returns error when string type id is passed", () => {
     return request(app)
-    .delete(`/api/jobs/NOTANUMBER`)
-    .expect(400)
-    .then(({body}) => {
-        expect(body.message).toBe("bad request")
-    })
-  })
+      .delete(`/api/jobs/NOTANUMBER`)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("bad request");
+      });
+  });
 
-test("404: returns error when comment_id does not exist", () => {
+  test("404: returns error when comment_id does not exist", () => {
     return request(app)
-    .delete(`/api/jobs/99999`)
-    .expect(404)
-    .then(({body}) => {
-        expect(body.message).toBe("job not found")
-    })
-})
+      .delete(`/api/jobs/99999`)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("job not found");
+      });
+  });
 });
 
 describe("Route does not exist", () => {
@@ -357,7 +355,7 @@ test("PATCH: returns 400 status code if tries to edit a user with an invalid id"
 describe("GET /api/users/:user_id/:status should get all of a helper users accepted jobs, it will get all the jobs for a particular user filtered by the status", () => {
   test("GET 200 will return an array of job objects if the user is a helper and the job status is accepted", () => {
     return request(app)
-      .get("/api/users/7/accepted")
+      .get("/api/users/6/accepted")
       .expect(200)
       .then(({ body }) => {
         expect(body.acceptedJobs).hasOwnProperty("posted_date");
@@ -368,15 +366,7 @@ describe("GET /api/users/:user_id/:status should get all of a helper users accep
             job_desc:
               "Looking for someone to keep me company and chat with me in the evenings.",
             elder_id: 1,
-            helper_id: 7,
-            status_id: 2,
-          },
-          {
-            job_title: "House Cleaning",
-            job_desc:
-              "Seeking assistance with general house cleaning and organizing.",
-            elder_id: 6,
-            helper_id: 7,
+            helper_id: 6,
             status_id: 2,
           },
         ]);
@@ -445,3 +435,7 @@ describe("GET /api/users/:phone_number to check if a user exists for logging in"
       });
   });
 });
+
+// describe("PATCH: /api/jobs/job_id, elder and helper can change the job status to completed once it has been done", () => {
+//   test("");
+// });
