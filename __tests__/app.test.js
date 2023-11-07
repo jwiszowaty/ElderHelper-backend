@@ -80,24 +80,24 @@ describe('GET /api/jobs/:job_id', () => {
             expect(body.job.length).toBe(1)
             const requiredKeys = ['job_id', 'job_title', 'job_desc', 'posted_date', 'expiry_date', 'elder_id', 'helper_id', 'status_id']
             expect(Object.getOwnPropertyNames(body.job[0])).toEqual(requiredKeys);
+      })
     })
-})
     it('returns status code 404 when passed nonexistent job id', () => {
     return request(app)
     .get('/api/jobs/99')
     .expect(404)
     .then((response) => {
         expect(response.body.message).toBe('job not found')
+      })
     })
-})
     it('returns status code 400 when passed invalid job id', () => {
     return request(app)
     .get('/api/jobs/abc')
     .expect(400)
     .then((response) => {
         expect(response.body.message).toBe('bad request')
+      })
     })
-})
 })
 
 
@@ -197,7 +197,7 @@ describe("POST /api/users", () => {
       .send(newUser)
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("bad request");
+        expect(body.message).toBe("bad request");
       });
   });
   test("returns 400 if request body does not include the relevant fields", () => {
@@ -212,7 +212,7 @@ describe("POST /api/users", () => {
       .send(newUser)
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("bad request");
+        expect(body.message).toBe("bad request");
       });
   });
 });
@@ -249,7 +249,7 @@ describe("PATCH /api/users/:user_id", () => {
       .send(patchUser)
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("bad request");
+        expect(body.message).toBe("bad request");
       });
   });
 });
@@ -284,6 +284,6 @@ test("PATCH: returns 400 status code if tries to edit a user with an invalid id"
     .send(patchUser)
     .expect(400)
     .then(({ body }) => {
-      expect(body.msg).toBe("bad request");
+      expect(body.message).toBe("bad request");
     });
 });
