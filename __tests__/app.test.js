@@ -29,6 +29,7 @@ describe("GET /api/jobs", () => {
             "elder_id",
             "helper_id",
             "status_id",
+            "postcode"
           ];
           expect(Object.getOwnPropertyNames(job)).toEqual(requiredKeys);
         });
@@ -36,55 +37,51 @@ describe("GET /api/jobs", () => {
   });
 });
 
-describe("POST /api/jobs", () => {
-  it("returns status code 201 and new job when passed valid job", () => {
-    const newJob = {
-      job_title: "Amazing new job",
-      job_desc: "Do it for me",
-      posted_date: "2023-11-06",
-      expiry_date: "2023-11-10",
-      elder_id: 1,
-    };
-    return request(app).post("/api/jobs").send(newJob).expect(201);
-  });
-  it("should return job object with relevant properties", () => {
-    const newJob = {
-      job_title: "Amazing new job",
-      job_desc: "Do it for me",
-      posted_date: "2023-11-06",
-      expiry_date: "2023-11-10",
-      elder_id: 1,
-    };
-    return request(app)
-      .post("/api/jobs")
-      .send(newJob)
-      .then(({ body }) => {
-        expect(body.job.job_title).toBe("Amazing new job");
-        expect(body.job.job_desc).toBe("Do it for me");
-        const requiredKeys = [
-          "job_id",
-          "job_title",
-          "job_desc",
-          "posted_date",
-          "expiry_date",
-          "elder_id",
-          "helper_id",
-          "status_id",
-        ];
-        expect(Object.getOwnPropertyNames(body.job)).toEqual(requiredKeys);
-      });
-  });
-  it("should return 400 error when passed object with invalid elder_id", () => {
-    const newJob = {
-      job_title: "Amazing new job",
-      job_desc: "Do it for me",
-      posted_date: "2023-11-06",
-      expiry_date: "2023-11-10",
-      elder_id: "jeff",
-    };
-    return request(app).post("/api/jobs").send(newJob).expect(400);
-  });
-});
+describe('POST /api/jobs', () => {
+    it('returns status code 201 and new job when passed valid job', () => {
+        const newJob = {
+        job_title:'Amazing new job',
+        job_desc: 'Do it for me',
+        posted_date: '2023-11-06',
+        expiry_date: '2023-11-10',
+        elder_id: 1,
+        postcode: 'M1 6JB'};
+        return request(app)
+        .post('/api/jobs')
+        .send(newJob)
+        .expect(201)
+    })
+    it('should return job object with relevant properties', () => {
+        const newJob = {
+            job_title:'Amazing new job',
+            job_desc: 'Do it for me',
+            posted_date: '2023-11-06',
+            expiry_date: '2023-11-10',
+            elder_id: 1,
+            postcode: 'M1 6JB'};
+        return request(app)
+        .post('/api/jobs')
+        .send(newJob)
+        .then(({body})=> {
+            expect(body.job.job_title).toBe('Amazing new job')
+            expect(body.job.job_desc).toBe('Do it for me')
+            const requiredKeys = ['job_id', 'job_title', 'job_desc', 'posted_date', 'expiry_date', 'elder_id', 'helper_id', 'status_id', 'postcode']
+            expect(Object.getOwnPropertyNames(body.job)).toEqual(requiredKeys);
+        })
+    })
+    it('should return 400 error when passed object with invalid elder_id', () => {
+        const newJob = {
+            job_title:'Amazing new job',
+            job_desc: 'Do it for me',
+            posted_date: '2023-11-06',
+            expiry_date: '2023-11-10',
+            elder_id: 'jeff'}
+        return request(app)
+        .post('/api/jobs')
+        .send(newJob)
+        .expect(400)
+    })
+})
 
 describe("GET /api/jobs/:job_id", () => {
   it("returns status code 200 and array containing single job object", () => {
@@ -102,6 +99,7 @@ describe("GET /api/jobs/:job_id", () => {
           "elder_id",
           "helper_id",
           "status_id",
+          "postcode"
         ];
         expect(Object.getOwnPropertyNames(body.job[0])).toEqual(requiredKeys);
       });
@@ -147,6 +145,7 @@ describe("PATCH /api/jobs/:job_id", () => {
           "elder_id",
           "helper_id",
           "status_id",
+          "postcode"
         ];
         expect(Object.getOwnPropertyNames(body.job)).toEqual(requiredKeys);
       });

@@ -122,7 +122,6 @@ exports.getAcceptedHelperJobs = (req, res, next) => {
 
   fetchAcceptedHelperJobs(user_id, status)
     .then((acceptedJobs) => {
-      console.log(acceptedJobs);
       res.status(200).send({ acceptedJobs: acceptedJobs });
     })
     .catch((err) => {
