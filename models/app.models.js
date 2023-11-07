@@ -22,22 +22,19 @@ exports.insertNewUser = (newUser) => {
 };
 
 exports.updateUser = (edit, userId) => {
-  const setValues = Object.values(edit);
-  //setValues.push(Object.values(edit)[0]);
-  setValues.push(userId);
+  const editArr = Object.values(edit);
+  editArr.push(userId);
 
-  console.log(setValues);
-
+  console.log(editArr);
   return db
     .query(
       `UPDATE users
-         SET phone_number = $1
-         WHERE user_id = $2
+         SET phone_number = $1, first_name = $2, surname= $3, is_elder = $4, postcode = $5, avatar_url = $6
+         WHERE user_id = $7
          RETURNING*;`,
-      setValues
+      editArr
     )
     .then(({ rows }) => {
-      console.log(rows);
       return rows[0];
     });
 };

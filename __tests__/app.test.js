@@ -75,7 +75,14 @@ describe("POST /api/users", () => {
 
 describe.only("PATCH /api/users/:user_id", () => {
   test("returns 200 status code and sends back the user object with updated details", () => {
-    const patchUser = { phone_number: "07950487263" };
+    const patchUser = {
+      phone_number: "07950487263",
+      first_name: "Jane",
+      surname: "Smithers",
+      is_elder: false,
+      postcode: "M2 2CT",
+      avatar_url: "https://example.com/avatars/janesmith.jpg",
+    };
     return request(app)
       .patch("/api/users/2")
       .send(patchUser)
@@ -84,9 +91,9 @@ describe.only("PATCH /api/users/:user_id", () => {
         expect(body.updatedUser).toMatchObject({
           phone_number: "07950487263",
           first_name: "Jane",
-          surname: "Smith",
+          surname: "Smithers",
           is_elder: false,
-          postcode: "M2 2BB",
+          postcode: "M2 2CT",
           avatar_url: "https://example.com/avatars/janesmith.jpg",
         });
       });

@@ -14,6 +14,7 @@ exports.postNewUser = (req, res, next) => {
 exports.patchUser = (req, res, next) => {
   const { user_id } = req.params;
   const edit = req.body;
+  console.log(edit);
   updateUser(edit, user_id).then((updatedUser) => {
     res.status(200).send({ updatedUser });
   });
