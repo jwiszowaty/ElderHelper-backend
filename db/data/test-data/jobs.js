@@ -15,7 +15,7 @@ module.exports = [
     posted_date: "2023-11-08",
     expiry_date: "2023-11-15",
     elder_id: 2,
-    helper_id: 10,
+    helper_id: 8,
     status_id: 1,
   },
   {
@@ -24,7 +24,7 @@ module.exports = [
     posted_date: "2023-11-10",
     expiry_date: "2023-11-25",
     elder_id: 3,
-    helper_id: 13,
+    helper_id: 5,
     status_id: 3,
   },
   {
@@ -34,7 +34,7 @@ module.exports = [
     posted_date: "2023-11-12",
     expiry_date: "2023-11-26",
     elder_id: 4,
-    helper_id: 14,
+    helper_id: 9,
     status_id: 2,
   },
   {
@@ -52,7 +52,7 @@ module.exports = [
     posted_date: "2023-11-16",
     expiry_date: "2023-11-30",
     elder_id: 6,
-    helper_id: 16,
-    status_id: 4,
+    helper_id: 7,
+    status_id: 2,
   },
 ];
