@@ -101,15 +101,25 @@ exports.updateUser = (edit, userId) => {
 };
 
 exports.fetchExistingUser = (phoneNumber) => {
-  return db
-    .query(
-      `SELECT phone_number, first_name, surname, is_elder, postcode, avatar_url, profile_msg FROM users WHERE phone_number = $1;`,
-      [phoneNumber]
-    )
-    .then(({ rows }) => {
-      if (rows.length === 0) {
-        return Promise.reject({ status: 404, message: "user does not exist" });
-      }
-      return rows[0];
+  if (/^\d+$/.test(phoneNumber)) {
+    return db
+      .query(
+        `SELECT phone_number, first_name, surname, is_elder, postcode, avatar_url, profile_msg FROM users WHERE phone_number = $1;`,
+        [phoneNumber]
+      )
+      .then(({ rows }) => {
+        if (rows.length === 0) {
+          return Promise.reject({
+            status: 404,
+            message: "user does not exist",
+          });
+        }
+        return rows[0];
+      });
+  } else {
+    return Promise.reject({
+      status: 400,
+      message: "not a valid phone number",
     });
+  }
 };

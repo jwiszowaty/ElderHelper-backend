@@ -409,7 +409,7 @@ describe("GET /api/users/:user_id/:status should get all of a helper users accep
   });
 });
 
-describe("GET /api/users/:phone_number to check if a user exists for logging in", () => {
+describe.only("GET /api/users/:phone_number to check if a user exists for logging in", () => {
   test("GET: will return a 200 and a user object if the phone number exists in the db", () => {
     return request(app)
       .get("/api/users/1234567")
@@ -432,6 +432,14 @@ describe("GET /api/users/:phone_number to check if a user exists for logging in"
       .expect(404)
       .then(({ body }) => {
         expect(body.message).toBe("user does not exist");
+      });
+  });
+  test("GET: will return a 400 and a bad request if invalid phone number submitted", () => {
+    return request(app)
+      .get("/api/users/not-a-number")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("not a valid phone number");
       });
   });
 });
