@@ -6,7 +6,7 @@ module.exports = [
     posted_date: "2023-11-06",
     expiry_date: "2023-11-20",
     elder_id: 1,
-    helper_id: 10,
+    helper_id: 6,
     status_id: 2,
   },
   {
