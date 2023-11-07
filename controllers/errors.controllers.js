@@ -18,12 +18,15 @@ exports.handlePSQLErrors = (err, req, res, next) => {
     }
 }
 exports.handleCustomErrors = (err, req, res, next) => {
+    console.log(err)
     if (err.status && err.message){
     res.status(err.status).send({message: err.message})
     } else {
+        console.log("going next error")
         next(err)
     }
 }
+
 exports.handleServerErrors = (err, req, res, next) => {
     console.log(err)
     res.status(500).send('server error');

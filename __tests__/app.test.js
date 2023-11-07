@@ -142,18 +142,18 @@ describe('PATCH /api/jobs/:job_id', () => {
             .then((response) => {
                 expect(response.body.message).toBe('bad request')})
     })
-    // it.only ('returns status code 400 when passed expiry date in the past', () => {
-    //     const toUpdate = {
-    //         job_title:'Amazing new job',
-    //         job_desc: 'Do it for me',
-    //         expiry_date: '2024-11-12'}
-    //         return request(app)
-    //         .patch('/api/jobs/1')
-    //         .send(toUpdate)
-    //         .expect(400)
-    //         .then((response) => {
-    //             expect(response.body.message).toBe('bad request')})
-    // })
+    it.only ('returns status code 400 when passed expiry date in the past', () => {
+        const toUpdate = {
+            job_title:'Amazing new job',
+            job_desc: 'Do it for me',
+            expiry_date: '2024-11-12'}
+            return request(app)
+            .patch('/api/jobs/1')
+            .send(toUpdate)
+            .expect(400)
+            .then((response) => {
+                expect(response.body.message).toBe('bad request')})
+    })
 })
 
 describe("Route does not exist", () => {
@@ -253,23 +253,25 @@ describe("PATCH /api/users/:user_id", () => {
       });
   });
 });
-// test.only("PATCH: returns 404 status code if tries to edit a user with a user_id that does not exist", () => {
-//   const patchUser = {
-//     phone_number: "07950487263",
-//     first_name: "Jane",
-//     surname: "Smithers",
-//     is_elder: false,
-//     postcode: "M2 2CT",
-//     avatar_url: "https://example.com/avatars/janesmith.jpg",
-//   };
-//   return request(app)
-//     .patch("/api/users/22")
-//     .send(patchUser)
-//     .expect(404)
-//     .then(({ body }) => {
-//       expect(body.msg).toBe("user_id does not exist");
-//     });
-// });
+
+test("PATCH: returns 404 status code if tries to edit a user with a user_id that does not exist", () => {
+  const patchUser = {
+    phone_number: "07950487263",
+    first_name: "Jane",
+    surname: "Smithers",
+    is_elder: false,
+    postcode: "M2 2CT",
+    avatar_url: "https://example.com/avatars/janesmith.jpg",
+  };
+  return request(app)
+    .patch("/api/users/22")
+    .send(patchUser)
+    .expect(404)
+    .then(({ body }) => {
+      expect(body.message).toBe("user_id does not exist");
+    });
+});
+
 test("PATCH: returns 400 status code if tries to edit a user with an invalid id", () => {
   const patchUser = {
     phone_number: "07950487263",
