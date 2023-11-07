@@ -9,7 +9,7 @@ const {
   patchUser,
   getExistingUser,
   getAcceptedHelperJobs,
-  deleteJob,
+  deleteJob
 } = require("./controllers/app.controllers.js");
 const {
   handlePSQLErrors,
