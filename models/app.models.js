@@ -55,6 +55,12 @@ exports.updateJob = (toUpdate, job_id) => {
     });
 };
 
+exports.jobToDelete = (job_id) => {
+  return db.query(`
+  DELETE FROM jobs 
+  WHERE job_id = $1;`, [job_id])
+}
+
 exports.insertNewUser = (newUser) => {
   const newUserArr = Object.values(newUser);
 
@@ -120,6 +126,37 @@ exports.fetchExistingUser = (phoneNumber) => {
     return Promise.reject({
       status: 400,
       message: "not a valid phone number",
+
+exports.fetchAcceptedHelperJobs = (userId, status) => {
+  const statusObj = {
+    requested: 1,
+    accepted: 2,
+    completed: 3,
+    expired: 4,
+  };
+  if (statusObj.hasOwnProperty(status)) {
+    return db
+      .query(
+        `SELECT job_title, job_desc, posted_date, expiry_date, elder_id, helper_id, status_id 
+      FROM jobs 
+      WHERE helper_id = $1 AND 
+      status_id = $2;`,
+        [userId, statusObj[status]]
+      )
+      .then(({ rows }) => {
+        console.log(rows);
+        if (rows.length === 0) {
+          return Promise.reject({
+            status: 404,
+            message: "user_id does not exist",
+          });
+        }
+        return rows;
+      });
+  } else {
+    return Promise.reject({
+      status: 404,
+      message: "Path not found!",
     });
   }
 };
