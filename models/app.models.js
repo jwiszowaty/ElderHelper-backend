@@ -96,7 +96,6 @@ exports.updateUser = (edit, userId) => {
     )
     .then(({ rows }) => {
       if (rows.length === 0) {
-        console.log("here");
         return Promise.reject({
           status: 404,
           message: "user_id does not exist",
@@ -105,27 +104,29 @@ exports.updateUser = (edit, userId) => {
       return rows[0];
     });
 };
-
 exports.fetchExistingUser = (phoneNumber) => {
-  if (/^\d+$/.test(phoneNumber)) {
-    return db
-      .query(
-        `SELECT phone_number, first_name, surname, is_elder, postcode, avatar_url, profile_msg FROM users WHERE phone_number = $1;`,
-        [phoneNumber]
-      )
-      .then(({ rows }) => {
-        if (rows.length === 0) {
-          return Promise.reject({
-            status: 404,
-            message: "user does not exist",
-          });
-        }
-        return rows[0];
+    if (/^\d+$/.test(phoneNumber)) {
+      return db
+        .query(
+          `SELECT phone_number, first_name, surname, is_elder, postcode, avatar_url, profile_msg FROM users WHERE phone_number = $1;`,
+          [phoneNumber]
+        )
+        .then(({ rows }) => {
+          if (rows.length === 0) {
+            return Promise.reject({
+              status: 404,
+              message: "user does not exist",
+            });
+          }
+          return rows[0];
+        });
+    } else {
+      return Promise.reject({
+        status: 400,
+        message: "not a valid phone number",
       });
-  } else {
-    return Promise.reject({
-      status: 400,
-      message: "not a valid phone number",
+    }
+  };
 
 exports.fetchAcceptedHelperJobs = (userId, status) => {
   const statusObj = {
@@ -144,7 +145,6 @@ exports.fetchAcceptedHelperJobs = (userId, status) => {
         [userId, statusObj[status]]
       )
       .then(({ rows }) => {
-        console.log(rows);
         if (rows.length === 0) {
           return Promise.reject({
             status: 404,
