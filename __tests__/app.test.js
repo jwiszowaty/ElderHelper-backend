@@ -146,7 +146,7 @@ describe('PATCH /api/jobs/:job_id', () => {
     //     const toUpdate = {
     //         job_title:'Amazing new job',
     //         job_desc: 'Do it for me',
-    //         expiry_date: '2024-11-12'}
+    //         expiry_date: '2022-11-12'}
     //         return request(app)
     //         .patch('/api/jobs/1')
     //         .send(toUpdate)
@@ -155,6 +155,32 @@ describe('PATCH /api/jobs/:job_id', () => {
     //             expect(response.body.message).toBe('bad request')})
     // })
 })
+
+describe("Deleting jobs from the board", () => {
+  test('DELETE responds with 204 status code', () => {
+    return request(app)
+      .delete("/api/jobs/1")
+      .expect(204)
+  });
+  test("400: returns error when string type id is passed", () => {
+    return request(app)
+    .delete(`/api/jobs/NOTANUMBER`)
+    .expect(400)
+    .then(({body}) => {
+        expect(body.message).toBe("bad request")
+    })
+  })
+
+test("404: returns error when comment_id does not exist", () => {
+    return request(app)
+    .delete(`/api/jobs/99999`)
+    .expect(404)
+    .then(({body}) => {
+        expect(body.message).toBe("job not found")
+    })
+})
+});
+
 
 describe("Route does not exist", () => {
   test('GET 404 responds with error message "Path not found!"', () => {
@@ -254,7 +280,7 @@ describe("PATCH /api/users/:user_id", () => {
   });
 });
 
-test.only("PATCH: returns 404 status code if tries to edit a user with a user_id that does not exist", () => {
+test("PATCH: returns 404 status code if tries to edit a user with a user_id that does not exist", () => {
   const patchUser = {
     phone_number: "07950487263",
     first_name: "Jane",
