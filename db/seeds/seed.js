@@ -1,12 +1,9 @@
-const format = require("pg-format");
-const db = require("../connection");
 
-//default elder url: https://images.unsplash.com/photo-1535320485706-44d43b919500
-//default helper url: https://images.unsplash.com/photo-1590086783191-a0694c7d1e6e
+const format = require('pg-format');
+const db = require('../connection'); 
 
-const seed = ({ userData, jobsData, statusData }) => {
-  return (
-    db
+const seed = ({ userData, jobsData, statusData }) => { 
+    return db
       .query(`DROP TABLE IF EXISTS users;`)
       .then(() => {
         return db.query(`DROP TABLE IF EXISTS jobs;`);
@@ -36,7 +33,7 @@ const seed = ({ userData, jobsData, statusData }) => {
         return Promise.all([statusTablePromise, usersTablePromise]);
       })
       .then(() => {
-        //expiry_date TIMESTAMP DEFAULT NOW() + INTERVAL 3 DAY, could be wrong
+
         return db.query(`
         CREATE TABLE jobs (
           job_id SERIAL PRIMARY KEY,
@@ -45,8 +42,8 @@ const seed = ({ userData, jobsData, statusData }) => {
           posted_date DATE DEFAULT NOW(),
           expiry_date DATE DEFAULT NOW(), 
           elder_id INT NOT NULL,
-          helper_id INT NOT NULL,
-          status_id INT NOT NULL
+          helper_id INT,
+          status_id INT NOT NULL DEFAULT 1
         );`);
       })
 
