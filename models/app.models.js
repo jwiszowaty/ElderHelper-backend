@@ -72,10 +72,10 @@ exports.updateUser = (edit, userId) => {
       editArr
     )
     .then(({ rows }) => {
-      // if (rows.length === 0) {
-      //   console.log("here");
-      //   return next({ status: 404, msg: "user_id does not exist" });
-      // }
+      if (rows.length === 0) {
+        console.log("here");
+        return Promise.reject({ status: 404, message: "user_id does not exist" });
+      }
       return rows[0];
     });
 };
