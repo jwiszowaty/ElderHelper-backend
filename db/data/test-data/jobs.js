@@ -8,6 +8,7 @@ module.exports = [
     elder_id: 1,
     helper_id: 6,
     status_id: 2,
+    postcode: "M6 6FF",
   },
   {
     job_title: "Food Shopping",
@@ -17,6 +18,7 @@ module.exports = [
     elder_id: 3,
     helper_id: 8,
     status_id: 1,
+    postcode: "M5 5EE",
   },
   {
     job_title: "Medication Reminder",
@@ -26,6 +28,7 @@ module.exports = [
     elder_id: 7,
     helper_id: 6,
     status_id: 3,
+    postcode: "M4 4DD",
   },
   {
     job_title: "Transportation Assistance",
@@ -36,6 +39,7 @@ module.exports = [
     elder_id: 7,
     helper_id: 4,
     status_id: 2,
+    postcode: "M4 4DD",
   },
   {
     job_title: "Meal Preparation",
@@ -45,6 +49,7 @@ module.exports = [
     elder_id: 9,
     helper_id: 4,
     status_id: 1,
+    postcode: "M3 3CC",
   },
   {
     job_title: "House Cleaning",
@@ -54,5 +59,6 @@ module.exports = [
     elder_id: 11,
     helper_id: 2,
     status_id: 2,
+    postcode: "M2 2BB",
   },
 ];
