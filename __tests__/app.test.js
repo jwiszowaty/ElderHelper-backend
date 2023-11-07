@@ -179,18 +179,43 @@ describe("PATCH /api/jobs/:job_id", () => {
         expect(response.body.message).toBe("bad request");
       });
   });
-  // it.only ('returns status code 400 when passed expiry date in the past', () => {
-  //     const toUpdate = {
-  //         job_title:'Amazing new job',
-  //         job_desc: 'Do it for me',
-  //         expiry_date: '2024-11-12'}
-  //         return request(app)
-  //         .patch('/api/jobs/1')
-  //         .send(toUpdate)
-  //         .expect(400)
-  //         .then((response) => {
-  //             expect(response.body.message).toBe('bad request')})
-  // })
+  it("returns status code 400 when passed expiry date in the past", () => {
+    const toUpdate = {
+      job_title: "Amazing new job",
+      job_desc: "Do it for me",
+      expiry_date: "2024-11-12",
+    };
+    return request(app)
+      .patch("/api/jobs/1")
+      .send(toUpdate)
+      .expect(400)
+      .then((response) => {
+        expect(response.body.message).toBe("bad request");
+      });
+  });
+});
+
+describe("Deleting jobs from the board", () => {
+  test("DELETE responds with 204 status code", () => {
+    return request(app).delete("/api/jobs/1").expect(204);
+  });
+  test("400: returns error when string type id is passed", () => {
+    return request(app)
+      .delete(`/api/jobs/NOTANUMBER`)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("bad request");
+      });
+  });
+
+  test("404: returns error when comment_id does not exist", () => {
+    return request(app)
+      .delete(`/api/jobs/99999`)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("job not found");
+      });
+  });
 });
 
 describe("Route does not exist", () => {
@@ -327,7 +352,64 @@ test("PATCH: returns 400 status code if tries to edit a user with an invalid id"
     });
 });
 
-describe.only("GET /api/users/:phone_number to check if a user exists for logging in", () => {
+describe("GET /api/users/:user_id/:status should get all of a helper users accepted jobs, it will get all the jobs for a particular user filtered by the status", () => {
+  test("GET 200 will return an array of job objects if the user is a helper and the job status is accepted", () => {
+    return request(app)
+      .get("/api/users/7/accepted")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.acceptedJobs).hasOwnProperty("posted_date");
+        expect(body.acceptedJobs).hasOwnProperty("expiry_date");
+        expect(body.acceptedJobs).toMatchObject([
+          {
+            job_title: "Companionship",
+            job_desc:
+              "Looking for someone to keep me company and chat with me in the evenings.",
+            elder_id: 1,
+            helper_id: 7,
+            status_id: 2,
+          },
+          {
+            job_title: "House Cleaning",
+            job_desc:
+              "Seeking assistance with general house cleaning and organizing.",
+            elder_id: 6,
+            helper_id: 7,
+            status_id: 2,
+          },
+        ]);
+      });
+  });
+  test("GET returns a 404 if trying to retrieve jobs from an id that does not exist", () => {
+    return request(app)
+      .get("/api/users/77/accepted")
+      .send()
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("user_id does not exist");
+      });
+  });
+  test("GET returns a 400 if trying to retrieve jobs from an id that is not valid", () => {
+    return request(app)
+      .get("/api/users/not-an-id/accepted")
+      .send()
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("bad request");
+      });
+  });
+  test("GET returns a 404 if trying to retrieve jobs with an invalid status", () => {
+    return request(app)
+      .get("/api/users/7/confirmed")
+      .send()
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("Path not found!");
+      });
+  });
+});
+
+describe("GET /api/users/:phone_number to check if a user exists for logging in", () => {
   test("GET: will return a 200 and a user object if the phone number exists in the db", () => {
     return request(app)
       .get("/api/users/1234567")
