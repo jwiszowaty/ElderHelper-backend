@@ -1,39 +1,58 @@
-
-const { fetchJobs, createJob, fetchSingleJob, updateJob, insertNewUser, updateUser } = require ('../models/app.models.js')
+const {
+  fetchJobs,
+  createJob,
+  fetchSingleJob,
+  updateJob,
+  insertNewUser,
+  updateUser,
+  fetchExistingUser,
+} = require("../models/app.models.js");
 
 exports.getJobs = (req, res, next) => {
-    fetchJobs().then((jobs) =>{
-        res.status(200).send(jobs)
+  fetchJobs()
+    .then((jobs) => {
+      res.status(200).send(jobs);
     })
-    .catch((err) => {next(err)})
-}
+    .catch((err) => {
+      next(err);
+    });
+};
 
 exports.getSingleJob = (req, res, next) => {
-    const {job_id} = req.params;
-    fetchSingleJob(job_id).then((job) => {
-        res.status(200).send({job})
+  const { job_id } = req.params;
+  fetchSingleJob(job_id)
+    .then((job) => {
+      res.status(200).send({ job });
     })
-    .catch((err) => {next(err)})
-}
+    .catch((err) => {
+      next(err);
+    });
+};
 
 exports.postJob = (req, res, next) => {
-    const newJob = req.body;
-    createJob(newJob).then((job) => {
-        res.status(201).send({job})
+  const newJob = req.body;
+  createJob(newJob)
+    .then((job) => {
+      res.status(201).send({ job });
     })
-    .catch((err) => {next(err)})
-}
+    .catch((err) => {
+      next(err);
+    });
+};
 
 exports.patchJob = (req, res, next) => {
-    const {job_id} = req.params;
-    const toUpdate = req.body;
-    fetchSingleJob(job_id).then(() => {
-    updateJob(toUpdate, job_id).then((job) => {
-        res.status(200).send({job})
+  const { job_id } = req.params;
+  const toUpdate = req.body;
+  fetchSingleJob(job_id)
+    .then(() => {
+      updateJob(toUpdate, job_id).then((job) => {
+        res.status(200).send({ job });
+      });
     })
-    })
-    .catch((err) => {next(err)})
-}
+    .catch((err) => {
+      next(err);
+    });
+};
 
 exports.postNewUser = (req, res, next) => {
   const newUser = req.body;
@@ -52,10 +71,20 @@ exports.patchUser = (req, res, next) => {
 
   updateUser(edit, user_id)
     .then((updatedUser) => {
-      res.status(200).send({ updatedUser });
+      res.status(200).send({ updatedUser: updatedUser });
     })
     .catch((err) => {
       next(err);
     });
 };
 
+exports.getExistingUser = (req, res, next) => {
+  const { phone_number } = req.params;
+  fetchExistingUser(phone_number)
+    .then((existingUser) => {
+      res.status(200).send({ user: existingUser });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
