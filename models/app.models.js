@@ -1,10 +1,10 @@
-const db = require('../db/connection.js')
+const db = require("../db/connection.js");
 
 exports.fetchJobs = () => {
-    return db.query(`SELECT * FROM jobs`).then(({rows}) => {
-        return rows
-    })
-}
+  return db.query(`SELECT * FROM jobs`).then(({ rows }) => {
+    return rows;
+  });
+};
 
 exports.fetchJobsByPostCode = (postcode) => {
   const postcodeQuery = `SELECT * FROM jobs
@@ -17,16 +17,18 @@ exports.fetchJobsByPostCode = (postcode) => {
 }
 
 exports.fetchSingleJob = (job_id) => {
-    return db.query(`SELECT * FROM jobs WHERE job_id = $1`, [job_id]).then(({rows}) => {
-        if (rows.length === 0){
-            return Promise.reject({
-               status: 404,
-               message: 'job not found'
-            })
-         }
-        return rows
-    })
-}
+  return db
+    .query(`SELECT * FROM jobs WHERE job_id = $1`, [job_id])
+    .then(({ rows }) => {
+      if (rows.length === 0) {
+        return Promise.reject({
+          status: 404,
+          message: "job not found",
+        });
+      }
+      return rows;
+    });
+};
 
 exports.createJob = (job) => {
     return db.query(`INSERT INTO jobs (job_title, job_desc, posted_date, expiry_date, elder_id, postcode) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`, [job.job_title, job.job_desc, job.posted_date, job.expiry_date, job.elder_id, job.postcode]).then(({rows}) => {
@@ -34,25 +36,33 @@ exports.createJob = (job) => {
     })
 }
 
+
 exports.updateJob = (toUpdate, job_id) => {
-    // if (new Date() > new Date(toUpdate.expiry_date)) {
-    //     console.log('in models error')
-    //     return Promise.reject({ 
-    //       status: 404, 
-    //       message: "bad request LALLALA" 
-    //     });
-    return db.query(`UPDATE jobs SET job_title = $1, job_desc = $2, expiry_date = $3 WHERE job_id = $4 RETURNING *;`, [toUpdate.job_title, toUpdate.job_desc, toUpdate.expiry_date, job_id])
-    .then(({rows}) => {
-        return rows[0]
-    })
-}
+  // if (new Date() < new Date(toUpdate.expiry_date)) {
+  //     console.log('in error')
+  //     return Promise.reject({
+  //         status: 400,
+  //         message: 'bad request'
+  //     })
+  // }
+  return db
+    .query(
+      `UPDATE jobs SET job_title = $1, job_desc = $2, expiry_date = $3 WHERE job_id = $4 RETURNING *;`,
+      [toUpdate.job_title, toUpdate.job_desc, toUpdate.expiry_date, job_id]
+    )
+    .then(({ rows }) => {
+      return rows[0];
+    });
+};
 
 exports.jobToDelete = (job_id) => {
-  return db.query(`
+  return db.query(
+    `
   DELETE FROM jobs 
-  WHERE job_id = $1;`, [job_id])
-}
-
+  WHERE job_id = $1;`,
+    [job_id]
+  );
+};
 
 exports.fetchJobsByElder = (elder_id) => {
   const findUserQuery = `
@@ -114,8 +124,70 @@ exports.updateUser = (edit, userId) => {
     )
     .then(({ rows }) => {
       if (rows.length === 0) {
-        return Promise.reject({ status: 404, message: "user_id does not exist" });
+        return Promise.reject({
+          status: 404,
+          message: "user_id does not exist",
+        });
       }
       return rows[0];
     });
+};
+exports.fetchExistingUser = (phoneNumber) => {
+  if (/^\d+$/.test(phoneNumber)) {
+    return db
+      .query(
+        `SELECT phone_number, first_name, surname, is_elder, postcode, avatar_url, profile_msg FROM users WHERE phone_number = $1;`,
+        [phoneNumber]
+      )
+      .then(({ rows }) => {
+        if (rows.length === 0) {
+          return Promise.reject({
+            status: 404,
+            message: "user does not exist",
+          });
+        }
+        return rows[0];
+      });
+  } else {
+    return Promise.reject({
+      status: 400,
+      message: "not a valid phone number",
+    });
+  }
+};
+
+exports.fetchAcceptedHelperJobs = (userId, status) => {
+  const statusObj = {
+    requested: 1,
+    accepted: 2,
+    completed: 3,
+    expired: 4,
+  };
+
+  if (statusObj.hasOwnProperty(status)) {
+    return db
+      .query(
+        `SELECT job_title, job_desc, posted_date, expiry_date, elder_id, helper_id, status_id 
+      FROM jobs 
+      WHERE helper_id = $1 AND 
+      status_id = $2;`,
+        [userId, statusObj[status]]
+      )
+      .then(({ rows }) => {
+        if (rows.length === 0) {
+          return Promise.reject({
+            status: 404,
+            message: "user_id does not exist",
+          });
+        }
+        console.log("HERE");
+        console.log(rows);
+        return rows;
+      });
+  } else {
+    return Promise.reject({
+      status: 404,
+      message: "Path not found!",
+    });
+  }
 };
