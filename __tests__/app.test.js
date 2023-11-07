@@ -72,3 +72,74 @@ describe("POST /api/users", () => {
       });
   });
 });
+
+describe("PATCH /api/users/:user_id", () => {
+  test("returns 200 status code and sends back the user object with updated details", () => {
+    const patchUser = {
+      phone_number: "07950487263",
+      first_name: "Jane",
+      surname: "Smithers",
+      is_elder: false,
+      postcode: "M2 2CT",
+      avatar_url: "https://example.com/avatars/janesmith.jpg",
+    };
+    return request(app)
+      .patch("/api/users/2")
+      .send(patchUser)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.updatedUser).toMatchObject({
+          phone_number: "07950487263",
+          first_name: "Jane",
+          surname: "Smithers",
+          is_elder: false,
+          postcode: "M2 2CT",
+          avatar_url: "https://example.com/avatars/janesmith.jpg",
+        });
+      });
+  });
+  test("PATCH: will return a 400 status code if missing required fields in the body", () => {
+    const patchUser = {};
+    return request(app)
+      .patch("/api/users/2")
+      .send(patchUser)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("bad request");
+      });
+  });
+});
+// test.only("PATCH: returns 404 status code if tries to edit a user with a user_id that does not exist", () => {
+//   const patchUser = {
+//     phone_number: "07950487263",
+//     first_name: "Jane",
+//     surname: "Smithers",
+//     is_elder: false,
+//     postcode: "M2 2CT",
+//     avatar_url: "https://example.com/avatars/janesmith.jpg",
+//   };
+//   return request(app)
+//     .patch("/api/users/22")
+//     .send(patchUser)
+//     .expect(404)
+//     .then(({ body }) => {
+//       expect(body.msg).toBe("user_id does not exist");
+//     });
+// });
+test("PATCH: returns 400 status code if tries to edit a user with an invalid id", () => {
+  const patchUser = {
+    phone_number: "07950487263",
+    first_name: "Jane",
+    surname: "Smithers",
+    is_elder: false,
+    postcode: "M2 2CT",
+    avatar_url: "https://example.com/avatars/janesmith.jpg",
+  };
+  return request(app)
+    .patch("/api/users/not-an-id")
+    .send(patchUser)
+    .expect(400)
+    .then(({ body }) => {
+      expect(body.msg).toBe("bad request");
+    });
+});
