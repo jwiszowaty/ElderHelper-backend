@@ -13,14 +13,20 @@ const {
 } = require("../models/app.models.js");
 
 exports.getJobs = (req, res, next) => {
-  fetchJobs()
-    .then((jobs) => {
-      res.status(200).send(jobs);
-    })
-    .catch((err) => {
-      next(err);
-    });
-};
+    const {postcode} = req.query
+    if (postcode) {
+      fetchJobsByPostCode(postcode)
+      .then((jobsByPostcode) => {
+        res.status(200).send(jobsByPostcode)
+      })
+      .catch((err) => {next(err)})
+    } else {
+      fetchJobs().then((jobs) =>{
+          res.status(200).send(jobs)
+      })
+      .catch((err) => {next(err)})
+    }
+  }
 
 exports.getSingleJob = (req, res, next) => {
   const { job_id } = req.params;

@@ -178,20 +178,6 @@ describe("PATCH /api/jobs/:job_id", () => {
         expect(response.body.message).toBe("bad request");
       });
   });
-  //   it("returns status code 400 when passed expiry date in the past", () => {
-  //     const toUpdate = {
-  //       job_title: "Amazing new job",
-  //       job_desc: "Do it for me",
-  //       expiry_date: "2024-11-12",
-  //     };
-  //     return request(app)
-  //       .patch("/api/jobs/1")
-  //       .send(toUpdate)
-  //       .expect(400)
-  //       .then((response) => {
-  //         expect(response.body.message).toBe("bad request");
-  //       });
-  //   });
 });
 
 describe("Deleting jobs from the board", () => {
@@ -348,42 +334,41 @@ describe("PATCH /api/users/:user_id", () => {
         expect(body.message).toBe("bad request");
       });
   });
-});
-
 test("PATCH: returns 404 status code if tries to edit a user with a user_id that does not exist", () => {
-  const patchUser = {
-    phone_number: "07950487263",
-    first_name: "Jane",
-    surname: "Smithers",
-    is_elder: false,
-    postcode: "M2 2CT",
-    avatar_url: "https://example.com/avatars/janesmith.jpg",
-  };
-  return request(app)
-    .patch("/api/users/22")
-    .send(patchUser)
-    .expect(404)
-    .then(({ body }) => {
-      expect(body.message).toBe("user_id does not exist");
-    });
-});
-
+    const patchUser = {
+      phone_number: "07950487263",
+      first_name: "Jane",
+      surname: "Smithers",
+      is_elder: false,
+      postcode: "M2 2CT",
+      avatar_url: "https://example.com/avatars/janesmith.jpg",
+    };
+    return request(app)
+      .patch("/api/users/22")
+      .send(patchUser)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("user_id does not exist");
+      });
+  });
 test("PATCH: returns 400 status code if tries to edit a user with an invalid id", () => {
-  const patchUser = {
-    phone_number: "07950487263",
-    first_name: "Jane",
-    surname: "Smithers",
-    is_elder: false,
-    postcode: "M2 2CT",
-    avatar_url: "https://example.com/avatars/janesmith.jpg",
-  };
-  return request(app)
-    .patch("/api/users/not-an-id")
-    .send(patchUser)
-    .expect(400)
-    .then(({ body }) => {
-      expect(body.message).toBe("bad request");
-    });
+    const patchUser = {
+      phone_number: "07950487263",
+      first_name: "Jane",
+      surname: "Smithers",
+      is_elder: false,
+      postcode: "M2 2CT",
+      avatar_url: "https://example.com/avatars/janesmith.jpg",
+    };
+    return request(app)
+      .patch("/api/users/not-an-id")
+      .send(patchUser)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("bad request");
+      });
+  });
+  
 });
 
 describe("GET /api/users/:user_id/:status should get all of a helper users accepted jobs, it will get all the jobs for a particular user filtered by the status", () => {
@@ -470,6 +455,21 @@ describe("GET /api/users/:phone_number to check if a user exists for logging in"
   });
 });
 
-// describe("PATCH: /api/jobs/job_id, elder and helper can change the job status to completed once it has been done", () => {
-//   test("");
-// });
+describe('GET /api/jobs?postcode=', () => {
+    it('returns jobs with queried postcode', () => {
+          return request(app)
+          .get('/api/jobs?postcode=M4')
+          .expect(200)
+          .then(({body}) => {
+            expect(body.length).toBe(1)
+          })
+      })
+      it('returns empty array when queried postcode with no jobs', () => {
+        return request(app)
+        .get('/api/jobs?postcode=M99')
+        .expect(200)
+        .then(({body}) => {
+          expect(body.length).toBe(0)
+        })
+    })
+  })
