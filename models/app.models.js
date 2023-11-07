@@ -1,4 +1,5 @@
 const db = require("../db/connection.js");
+const Promise = require("fs/promises");
 
 exports.insertNewUser = (newUser) => {
   const newUserArr = Object.values(newUser);
@@ -25,7 +26,6 @@ exports.updateUser = (edit, userId) => {
   const editArr = Object.values(edit);
   editArr.push(userId);
 
-  console.log(editArr);
   return db
     .query(
       `UPDATE users
@@ -35,6 +35,10 @@ exports.updateUser = (edit, userId) => {
       editArr
     )
     .then(({ rows }) => {
+      // if (rows.length === 0) {
+      //   console.log("here");
+      //   return next({ status: 404, msg: "user_id does not exist" });
+      // }
       return rows[0];
     });
 };
