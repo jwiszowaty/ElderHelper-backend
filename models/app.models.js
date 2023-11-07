@@ -7,14 +7,13 @@ exports.fetchJobs = () => {
 };
 
 exports.fetchJobsByPostCode = (postcode) => {
-  const postcodeQuery = `SELECT * FROM jobs
-  WHERE postcode LIKE $1 || ' %' ESCAPE '\';`
-  
-  return db.query(postcodeQuery, [postcode])
-  .then(({rows}) => {
-    return rows
-  })
-}
+    const postcodeQuery = `SELECT * FROM jobs
+    WHERE postcode LIKE $1 || ' %' ESCAPE '\';`
+    return db.query(postcodeQuery, [postcode])
+    .then(({rows}) => {
+      return rows
+    })
+  }
 
 exports.fetchSingleJob = (job_id) => {
   return db
