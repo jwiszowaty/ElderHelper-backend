@@ -26,7 +26,6 @@ exports.postJob = (req, res, next) => {
 exports.patchJob = (req, res, next) => {
     const {job_id} = req.params;
     const toUpdate = req.body;
-    console.log('in the controller')
     fetchSingleJob(job_id).then(() => {
     updateJob(toUpdate, job_id).then((job) => {
         res.status(200).send({job})

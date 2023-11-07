@@ -111,4 +111,47 @@ describe('PATCH /api/jobs/:job_id', () => {
         .patch('/api/jobs/1')
         .send(toUpdate)
         .expect(200)
-})})
+        .then(({body})=> {
+            expect(body.job.job_title).toBe('Amazing new job')
+            expect(body.job.job_desc).toBe('Do it for me')
+            const requiredKeys = ['job_id', 'job_title', 'job_desc', 'posted_date', 'expiry_date', 'elder_id', 'helper_id', 'status_id']
+            expect(Object.getOwnPropertyNames(body.job)).toEqual(requiredKeys);
+        })
+})
+    it ('returns status code 404 when passed nonexistent job id', () => {
+        const toUpdate = {
+            job_title:'Amazing new job',
+            job_desc: 'Do it for me',
+            expiry_date: '2023-11-12'}
+            return request(app)
+            .patch('/api/jobs/999')
+            .send(toUpdate)
+            .expect(404)
+            .then((response) => {
+                expect(response.body.message).toBe('job not found')})
+    })
+    it ('returns status code 400 when passed invalid job id', () => {
+        const toUpdate = {
+            job_title:'Amazing new job',
+            job_desc: 'Do it for me',
+            expiry_date: '2023-11-12'}
+            return request(app)
+            .patch('/api/jobs/abc')
+            .send(toUpdate)
+            .expect(400)
+            .then((response) => {
+                expect(response.body.message).toBe('bad request')})
+    })
+    // it.only ('returns status code 400 when passed expiry date in the past', () => {
+    //     const toUpdate = {
+    //         job_title:'Amazing new job',
+    //         job_desc: 'Do it for me',
+    //         expiry_date: '2024-11-12'}
+    //         return request(app)
+    //         .patch('/api/jobs/1')
+    //         .send(toUpdate)
+    //         .expect(400)
+    //         .then((response) => {
+    //             expect(response.body.message).toBe('bad request')})
+    // })
+})
