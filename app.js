@@ -7,7 +7,7 @@ const {
   patchJob,
   postNewUser,
   patchUser,
-  getExistingUse,
+  getExistingUser,
   getAcceptedHelperJobs,
   deleteJob,
 } = require("./controllers/app.controllers.js");
