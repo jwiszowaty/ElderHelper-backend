@@ -180,8 +180,6 @@ exports.fetchAcceptedHelperJobs = (userId, status) => {
             message: "user_id does not exist",
           });
         }
-        console.log("HERE");
-        console.log(rows);
         return rows;
       });
   } else {
