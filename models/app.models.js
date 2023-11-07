@@ -6,6 +6,16 @@ exports.fetchJobs = () => {
     })
 }
 
+exports.fetchJobsByPostCode = (postcode) => {
+  const postcodeQuery = `SELECT * FROM jobs
+  WHERE postcode LIKE $1 || ' %' ESCAPE '\';`
+  
+  return db.query(postcodeQuery, [postcode])
+  .then(({rows}) => {
+    return rows
+  })
+}
+
 exports.fetchSingleJob = (job_id) => {
     return db.query(`SELECT * FROM jobs WHERE job_id = $1`, [job_id]).then(({rows}) => {
         if (rows.length === 0){
@@ -19,7 +29,7 @@ exports.fetchSingleJob = (job_id) => {
 }
 
 exports.createJob = (job) => {
-    return db.query(`INSERT INTO jobs (job_title, job_desc, posted_date, expiry_date, elder_id) VALUES ($1, $2, $3, $4, $5) RETURNING *;`, [job.job_title, job.job_desc, job.posted_date, job.expiry_date, job.elder_id]).then(({rows}) => {
+    return db.query(`INSERT INTO jobs (job_title, job_desc, posted_date, expiry_date, elder_id, postcode) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`, [job.job_title, job.job_desc, job.posted_date, job.expiry_date, job.elder_id, job.postcode]).then(({rows}) => {
         return rows[0]
     })
 }
@@ -43,6 +53,31 @@ exports.jobToDelete = (job_id) => {
   WHERE job_id = $1;`, [job_id])
 }
 
+
+exports.fetchJobsByElder = (elder_id) => {
+  const findUserQuery = `
+  SELECT * FROM users
+  WHERE user_id = $1;`
+
+  return db.query(findUserQuery, [elder_id])
+  .then(({rows}) => {
+    if (rows.length < 1){
+      return Promise.reject({ 
+        status: 404, 
+        message: "User does not exist" 
+      })
+
+    } else {
+      return db.query (`
+      SELECT * FROM jobs
+      WHERE elder_id = $1;
+      `, [elder_id])
+      .then(({rows}) => {
+        return rows
+      })
+    }
+  })
+}
 
 exports.insertNewUser = (newUser) => {
   const newUserArr = Object.values(newUser);

@@ -1,11 +1,20 @@
 
-const { fetchJobs, createJob, fetchSingleJob, updateJob, insertNewUser, updateUser, jobToDelete } = require ('../models/app.models.js')
+const { fetchJobs, createJob, fetchSingleJob, updateJob, insertNewUser, updateUser, jobToDelete, fetchJobsByElder, fetchJobsByPostCode } = require ('../models/app.models.js')
 
 exports.getJobs = (req, res, next) => {
+  const {postcode} = req.query
+  if (postcode) {
+    fetchJobsByPostCode(postcode)
+    .then((jobsByPostcode) => {
+      res.status(200).send(jobsByPostcode)
+    })
+    .catch((err) => {next(err)})
+  } else {
     fetchJobs().then((jobs) =>{
         res.status(200).send(jobs)
     })
     .catch((err) => {next(err)})
+  }
 }
 
 exports.getSingleJob = (req, res, next) => {
@@ -45,6 +54,15 @@ exports.deleteJob = (req, res, next) => {
     res.status(204).send()
   })
   .catch((err) => {next(err)})
+}
+
+exports.getJobsByElder = (req, res, next) => {
+  const {elder_id} = req.params;
+  fetchJobsByElder(elder_id)
+  .then((jobs) => {
+    res.status(200).send(jobs)
+  })
+  .catch((err) => {next (err)})
 }
 
 
