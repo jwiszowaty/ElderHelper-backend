@@ -56,11 +56,13 @@ exports.updateJob = (toUpdate, job_id) => {
 };
 
 exports.jobToDelete = (job_id) => {
-  return db.query(`
+  return db.query(
+    `
   DELETE FROM jobs 
-  WHERE job_id = $1;`, [job_id])
-}
-
+  WHERE job_id = $1;`,
+    [job_id]
+  );
+};
 
 exports.insertNewUser = (newUser) => {
   const newUserArr = Object.values(newUser);
@@ -97,7 +99,6 @@ exports.updateUser = (edit, userId) => {
     )
     .then(({ rows }) => {
       if (rows.length === 0) {
-        console.log("here");
         return Promise.reject({
           status: 404,
           message: "user_id does not exist",
@@ -124,7 +125,6 @@ exports.fetchAcceptedHelperJobs = (userId, status) => {
         [userId, statusObj[status]]
       )
       .then(({ rows }) => {
-        console.log(rows);
         if (rows.length === 0) {
           return Promise.reject({
             status: 404,
@@ -138,5 +138,31 @@ exports.fetchAcceptedHelperJobs = (userId, status) => {
       status: 404,
       message: "Path not found!",
     });
+  }
+};
+
+exports.updateJobStatus = (jobId, statusId) => {
+  if (statusId > 4 || statusId === undefined) {
+    return Promise.reject({ status: 400, message: "bad request" });
+  } else if (/^[0-9]+$/.test(jobId)) {
+    return db
+      .query(
+        `UPDATE jobs 
+                  SET status_id = 3
+                  WHERE job_id = $1 RETURNING*`,
+        [jobId]
+      )
+      .then(({ rows }) => {
+        if (rows.length === 0) {
+          console.log(rows);
+          return Promise.reject({
+            status: 404,
+            message: "job does not exist!",
+          });
+        }
+        return rows[0];
+      });
+  } else {
+    return Promise.reject({ status: 404, message: "job not found!" });
   }
 };

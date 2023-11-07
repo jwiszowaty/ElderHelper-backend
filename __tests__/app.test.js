@@ -196,30 +196,27 @@ describe("PATCH /api/jobs/:job_id", () => {
 });
 
 describe("Deleting jobs from the board", () => {
-  test('DELETE responds with 204 status code', () => {
-    return request(app)
-      .delete("/api/jobs/1")
-      .expect(204)
+  test("DELETE responds with 204 status code", () => {
+    return request(app).delete("/api/jobs/1").expect(204);
   });
   test("400: returns error when string type id is passed", () => {
     return request(app)
-    .delete(`/api/jobs/NOTANUMBER`)
-    .expect(400)
-    .then(({body}) => {
-        expect(body.message).toBe("bad request")
-    })
-  })
+      .delete(`/api/jobs/NOTANUMBER`)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("bad request");
+      });
+  });
 
-test("404: returns error when comment_id does not exist", () => {
+  test("404: returns error when comment_id does not exist", () => {
     return request(app)
-    .delete(`/api/jobs/99999`)
-    .expect(404)
-    .then(({body}) => {
-        expect(body.message).toBe("job not found")
-    })
-})
+      .delete(`/api/jobs/99999`)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("job not found");
+      });
+  });
 });
-
 
 describe("Route does not exist", () => {
   test('GET 404 responds with error message "Path not found!"', () => {
@@ -355,7 +352,7 @@ test("PATCH: returns 400 status code if tries to edit a user with an invalid id"
     });
 });
 
-describe.only("GET /api/users/:user_id/:status should get all of a helper users accepted jobs, it will get all the jobs for a particular user filtered by the status", () => {
+describe("GET /api/users/:user_id/:status should get all of a helper users accepted jobs, it will get all the jobs for a particular user filtered by the status", () => {
   test("GET 200 will return an array of job objects if the user is a helper and the job status is accepted", () => {
     return request(app)
       .get("/api/users/7/accepted")
@@ -408,6 +405,67 @@ describe.only("GET /api/users/:user_id/:status should get all of a helper users 
       .expect(404)
       .then(({ body }) => {
         expect(body.message).toBe("Path not found!");
+      });
+  });
+});
+
+describe.only("PATCH /api/:job_id updates status when elder or helper changes it to completed", () => {
+  test("PATCH returns 200 and updated job object when helper or elder changes status to completed", () => {
+    const patchStatus = { status_id: 3 };
+    return request(app)
+      .patch("/api/1")
+      .send(patchStatus)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.completedJob).toMatchObject({
+          job_title: "Companionship",
+          job_desc:
+            "Looking for someone to keep me company and chat with me in the evenings.",
+          elder_id: 1,
+          helper_id: 7,
+          status_id: 3,
+        });
+      });
+  });
+  test("PATCH returns 404 and an error message for an invalid job ID", () => {
+    const patchStatus = { status_id: 3 };
+    return request(app)
+      .patch("/api/invalid-job-id")
+      .send(patchStatus)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("job not found!");
+      });
+  });
+  test("PATCH returns 404 and an error message for a valid but non-existent job Id", () => {
+    const patchStatus = { status_id: 3 };
+    return request(app)
+      .patch("/api/9999")
+      .send(patchStatus)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("job does not exist!");
+      });
+  });
+
+  test("PATCH returns 400 and an error message for a body missing the required fields", () => {
+    const patchStatus = {};
+    return request(app)
+      .patch("/api/1")
+      .send(patchStatus)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("bad request");
+      });
+  });
+  test("PATCH returns 400 and an error message for a non-existent status_id", () => {
+    const patchStatus = { status_id: 9999 };
+    return request(app)
+      .patch("/api/1")
+      .send(patchStatus)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("bad request");
       });
   });
 });

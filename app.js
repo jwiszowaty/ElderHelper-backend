@@ -8,7 +8,8 @@ const {
   postNewUser,
   patchUser,
   getAcceptedHelperJobs,
-  deleteJob
+  deleteJob,
+  changeJobStatus,
 } = require("./controllers/app.controllers.js");
 
 const {
@@ -30,12 +31,17 @@ app.post("/api/jobs", postJob);
 
 app.patch("/api/jobs/:job_id", patchJob);
 
-app.delete('/api/jobs/:job_id', deleteJob)
+app.patch("/api/:job_id", changeJobStatus);
+
+app.delete("/api/jobs/:job_id", deleteJob);
+
+//user endpoints
 
 app.post("/api/users", postNewUser);
 
 app.patch("/api/users/:user_id", patchUser);
 
+//error handling
 app.use(handlePSQLErrors, handleCustomErrors, handleServerErrors);
 
 app.all("/api/*", (req, res, next) => {
