@@ -6,7 +6,7 @@ module.exports = [
     posted_date: "2023-11-06",
     expiry_date: "2023-11-20",
     elder_id: 1,
-    helper_id: 101,
+    helper_id: 10,
     status_id: 2,
   },
   {
@@ -14,8 +14,8 @@ module.exports = [
     job_desc: "Need help with grocery shopping once a week.",
     posted_date: "2023-11-08",
     expiry_date: "2023-11-15",
-    elder_id: 2,
-    helper_id: 102,
+    elder_id: 7,
+    helper_id: 12,
     status_id: 1,
   },
   {
@@ -24,7 +24,7 @@ module.exports = [
     posted_date: "2023-11-10",
     expiry_date: "2023-11-25",
     elder_id: 3,
-    helper_id: 103,
+    helper_id: 6,
     status_id: 3,
   },
   {
@@ -33,8 +33,8 @@ module.exports = [
       "Looking for someone to drive me to doctor's appointments and grocery stores.",
     posted_date: "2023-11-12",
     expiry_date: "2023-11-26",
-    elder_id: 4,
-    helper_id: 104,
+    elder_id: 5,
+    helper_id: 14,
     status_id: 2,
   },
   {
@@ -43,7 +43,7 @@ module.exports = [
     posted_date: "2023-11-14",
     expiry_date: "2023-11-21",
     elder_id: 5,
-    helper_id: 105,
+    helper_id: 6,
     status_id: 1,
   },
   {
@@ -51,8 +51,8 @@ module.exports = [
     job_desc: "Seeking assistance with general house cleaning and organizing.",
     posted_date: "2023-11-16",
     expiry_date: "2023-11-30",
-    elder_id: 6,
-    helper_id: 106,
+    elder_id: 7,
+    helper_id: 8,
     status_id: 4,
   },
   {
@@ -62,7 +62,7 @@ module.exports = [
     posted_date: "2023-11-18",
     expiry_date: "2023-11-27",
     elder_id: 7,
-    helper_id: 107,
+    helper_id: 4,
     status_id: 1,
   },
   {
@@ -71,8 +71,8 @@ module.exports = [
       "Need assistance in taking care of my pet dog, including feeding and walks.",
     posted_date: "2023-11-20",
     expiry_date: "2023-12-05",
-    elder_id: 8,
-    helper_id: 108,
+    elder_id: 11,
+    helper_id: 18,
     status_id: 2,
   },
   {
@@ -81,8 +81,8 @@ module.exports = [
       "Require help with using and troubleshooting my computer and smartphone.",
     posted_date: "2023-11-22",
     expiry_date: "2023-12-10",
-    elder_id: 9,
-    helper_id: 109,
+    elder_id: 7,
+    helper_id: 14,
     status_id: 3,
   },
   {
@@ -90,8 +90,8 @@ module.exports = [
     job_desc: "Looking for someone to mow the lawn and maintain my garden.",
     posted_date: "2023-11-24",
     expiry_date: "2023-12-15",
-    elder_id: 10,
-    helper_id: 110,
+    elder_id: 11,
+    helper_id: 12,
     status_id: 4,
   },
   {
@@ -100,8 +100,8 @@ module.exports = [
       "Need help with reading books and newspapers due to vision impairment.",
     posted_date: "2023-11-26",
     expiry_date: "2023-12-20",
-    elder_id: 11,
-    helper_id: 111,
+    elder_id: 7,
+    helper_id: 16,
     status_id: 2,
   },
   {
@@ -110,8 +110,8 @@ module.exports = [
       "Looking for someone to drive me to doctor's appointments and grocery stores.",
     posted_date: "2023-11-12",
     expiry_date: "2023-11-26",
-    elder_id: 12,
-    helper_id: 112,
+    elder_id: 11,
+    helper_id: 20,
     status_id: 1,
   },
   {
@@ -121,7 +121,7 @@ module.exports = [
     posted_date: "2023-11-28",
     expiry_date: "2023-12-08",
     elder_id: 13,
-    helper_id: 113,
+    helper_id: 2,
     status_id: 3,
   },
   {
@@ -130,8 +130,8 @@ module.exports = [
       "Require help with using and troubleshooting my computer and smartphone.",
     posted_date: "2023-11-30",
     expiry_date: "2023-12-12",
-    elder_id: 14,
-    helper_id: 114,
+    elder_id: 15,
+    helper_id: 4,
     status_id: 2,
   },
   {
@@ -141,7 +141,7 @@ module.exports = [
     posted_date: "2023-12-02",
     expiry_date: "2023-12-18",
     elder_id: 15,
-    helper_id: 115,
+    helper_id: 6,
     status_id: 4,
   },
   {
@@ -149,8 +149,8 @@ module.exports = [
     job_desc: "Seeking someone to listen to and discuss music with me.",
     posted_date: "2023-12-04",
     expiry_date: "2023-12-22",
-    elder_id: 16,
-    helper_id: 116,
+    elder_id: 17,
+    helper_id: 16,
     status_id: 1,
   },
   {
@@ -159,7 +159,7 @@ module.exports = [
     posted_date: "2023-12-06",
     expiry_date: "2023-12-25",
     elder_id: 17,
-    helper_id: 117,
+    helper_id: 8,
     status_id: 3,
   },
   {
@@ -168,8 +168,8 @@ module.exports = [
       "Looking for someone to drive me to doctor's appointments and the supermarket.",
     posted_date: "2023-11-12",
     expiry_date: "2023-11-26",
-    elder_id: 18,
-    helper_id: 118,
+    elder_id: 19,
+    helper_id: 7,
     status_id: 2,
   },
   {
@@ -179,7 +179,7 @@ module.exports = [
     posted_date: "2023-12-08",
     expiry_date: "2023-12-30",
     elder_id: 19,
-    helper_id: 119,
+    helper_id: 6,
     status_id: 4,
   },
   {
