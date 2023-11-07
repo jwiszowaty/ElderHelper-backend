@@ -1,5 +1,5 @@
 
-const { fetchJobs, createJob, fetchSingleJob, updateJob, insertNewUser, updateUser } = require ('../models/app.models.js')
+const { fetchJobs, createJob, fetchSingleJob, updateJob, insertNewUser, updateUser, jobToDelete } = require ('../models/app.models.js')
 
 exports.getJobs = (req, res, next) => {
     fetchJobs().then((jobs) =>{
@@ -34,6 +34,19 @@ exports.patchJob = (req, res, next) => {
     })
     .catch((err) => {next(err)})
 }
+
+exports.deleteJob = (req, res, next) => {
+  const {job_id} = req.params;
+  fetchSingleJob(job_id)
+  .then(() => {
+    jobToDelete(job_id)
+  })
+  .then(() => {
+    res.status(204).send()
+  })
+  .catch((err) => {next(err)})
+}
+
 
 exports.postNewUser = (req, res, next) => {
   const newUser = req.body;

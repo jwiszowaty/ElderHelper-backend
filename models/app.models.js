@@ -25,18 +25,24 @@ exports.createJob = (job) => {
 }
 
 exports.updateJob = (toUpdate, job_id) => {
-    // if (new Date() < new Date(toUpdate.expiry_date)) {
-    //     console.log('in error')
-    //     return Promise.reject({
-    //         status: 400,
-    //         message: 'bad request'
-    //     })
-    // }
+    // if (new Date() > new Date(toUpdate.expiry_date)) {
+    //     console.log('in models error')
+    //     return Promise.reject({ 
+    //       status: 404, 
+    //       message: "bad request LALLALA" 
+    //     });
     return db.query(`UPDATE jobs SET job_title = $1, job_desc = $2, expiry_date = $3 WHERE job_id = $4 RETURNING *;`, [toUpdate.job_title, toUpdate.job_desc, toUpdate.expiry_date, job_id])
     .then(({rows}) => {
         return rows[0]
     })
 }
+
+exports.jobToDelete = (job_id) => {
+  return db.query(`
+  DELETE FROM jobs 
+  WHERE job_id = $1;`, [job_id])
+}
+
 
 exports.insertNewUser = (newUser) => {
   const newUserArr = Object.values(newUser);
@@ -73,7 +79,6 @@ exports.updateUser = (edit, userId) => {
     )
     .then(({ rows }) => {
       if (rows.length === 0) {
-        console.log("here");
         return Promise.reject({ status: 404, message: "user_id does not exist" });
       }
       return rows[0];
