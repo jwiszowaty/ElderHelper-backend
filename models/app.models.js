@@ -55,6 +55,13 @@ exports.updateJob = (toUpdate, job_id) => {
     });
 };
 
+exports.jobToDelete = (job_id) => {
+  return db.query(`
+  DELETE FROM jobs 
+  WHERE job_id = $1;`, [job_id])
+}
+
+
 exports.insertNewUser = (newUser) => {
   const newUserArr = Object.values(newUser);
 

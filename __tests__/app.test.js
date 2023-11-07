@@ -195,6 +195,32 @@ describe("PATCH /api/jobs/:job_id", () => {
   });
 });
 
+describe("Deleting jobs from the board", () => {
+  test('DELETE responds with 204 status code', () => {
+    return request(app)
+      .delete("/api/jobs/1")
+      .expect(204)
+  });
+  test("400: returns error when string type id is passed", () => {
+    return request(app)
+    .delete(`/api/jobs/NOTANUMBER`)
+    .expect(400)
+    .then(({body}) => {
+        expect(body.message).toBe("bad request")
+    })
+  })
+
+test("404: returns error when comment_id does not exist", () => {
+    return request(app)
+    .delete(`/api/jobs/99999`)
+    .expect(404)
+    .then(({body}) => {
+        expect(body.message).toBe("job not found")
+    })
+})
+});
+
+
 describe("Route does not exist", () => {
   test('GET 404 responds with error message "Path not found!"', () => {
     return request(app)
