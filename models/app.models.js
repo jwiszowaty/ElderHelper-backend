@@ -7,13 +7,12 @@ exports.fetchJobs = () => {
 };
 
 exports.fetchJobsByPostCode = (postcode) => {
-    const postcodeQuery = `SELECT * FROM jobs
-    WHERE postcode LIKE $1 || ' %' ESCAPE '\';`
-    return db.query(postcodeQuery, [postcode])
-    .then(({rows}) => {
-      return rows
-    })
-  }
+  const postcodeQuery = `SELECT * FROM jobs
+    WHERE postcode LIKE $1 || ' %' ESCAPE '\';`;
+  return db.query(postcodeQuery, [postcode]).then(({ rows }) => {
+    return rows;
+  });
+};
 
 exports.fetchSingleJob = (job_id) => {
   return db
@@ -30,11 +29,22 @@ exports.fetchSingleJob = (job_id) => {
 };
 
 exports.createJob = (job) => {
-    return db.query(`INSERT INTO jobs (job_title, job_desc, posted_date, expiry_date, elder_id, postcode) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`, [job.job_title, job.job_desc, job.posted_date, job.expiry_date, job.elder_id, job.postcode]).then(({rows}) => {
-        return rows[0]
-    })
-}
-
+  return db
+    .query(
+      `INSERT INTO jobs (job_title, job_desc, posted_date, expiry_date, elder_id, postcode) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
+      [
+        job.job_title,
+        job.job_desc,
+        job.posted_date,
+        job.expiry_date,
+        job.elder_id,
+        job.postcode,
+      ]
+    )
+    .then(({ rows }) => {
+      return rows[0];
+    });
+};
 
 exports.updateJob = (toUpdate, job_id) => {
   // if (new Date() < new Date(toUpdate.expiry_date)) {
@@ -66,28 +76,29 @@ exports.jobToDelete = (job_id) => {
 exports.fetchJobsByElder = (elder_id) => {
   const findUserQuery = `
   SELECT * FROM users
-  WHERE user_id = $1;`
+  WHERE user_id = $1;`;
 
-  return db.query(findUserQuery, [elder_id])
-  .then(({rows}) => {
-    if (rows.length < 1){
-      return Promise.reject({ 
-        status: 404, 
-        message: "User does not exist" 
-      })
-
+  return db.query(findUserQuery, [elder_id]).then(({ rows }) => {
+    if (rows.length < 1) {
+      return Promise.reject({
+        status: 404,
+        message: "User does not exist",
+      });
     } else {
-      return db.query (`
+      return db
+        .query(
+          `
       SELECT * FROM jobs
       WHERE elder_id = $1;
-      `, [elder_id])
-      .then(({rows}) => {
-        return rows
-      })
+      `,
+          [elder_id]
+        )
+        .then(({ rows }) => {
+          return rows;
+        });
     }
-  })
-}
-
+  });
+};
 
 exports.insertNewUser = (newUser) => {
   const newUserArr = Object.values(newUser);
@@ -178,7 +189,7 @@ exports.fetchAcceptedHelperJobs = (userId, status) => {
         if (rows.length === 0) {
           return Promise.reject({
             status: 404,
-            message: "user_id does not exist",
+            message: "there is no user_id with jobs of this status",
           });
         }
         return rows;

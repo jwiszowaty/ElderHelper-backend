@@ -15,16 +15,20 @@ afterAll(() => {
 describe("GET /api", () => {
   it("returns status code 200 with contents of endpoints.json as object", () => {
     return request(app)
-    .get('/api')
-    .expect(200)
-    .then((response) => {
-      expect(typeof response.body.endpoints).toBe('object')
-      expect((response.body.endpoints).hasOwnProperty('GET /api')).toBe(true)
-      expect((response.body.endpoints).hasOwnProperty('GET /api/jobs')).toBe(true)
-      expect((response.body.endpoints).hasOwnProperty('GET /api/jobs/:job_id')).toBe(true)
-    })
-  })
-})
+      .get("/api")
+      .expect(200)
+      .then((response) => {
+        expect(typeof response.body.endpoints).toBe("object");
+        expect(response.body.endpoints.hasOwnProperty("GET /api")).toBe(true);
+        expect(response.body.endpoints.hasOwnProperty("GET /api/jobs")).toBe(
+          true
+        );
+        expect(
+          response.body.endpoints.hasOwnProperty("GET /api/jobs/:job_id")
+        ).toBe(true);
+      });
+  });
+});
 
 describe("GET /api/jobs", () => {
   it("returns status code 200 and array of job objects", () => {
@@ -450,7 +454,9 @@ describe("GET /api/users/:user_id/:status should get all of a helper users accep
       .send()
       .expect(404)
       .then(({ body }) => {
-        expect(body.message).toBe("user_id does not exist");
+        expect(body.message).toBe(
+          "there is no user_id with jobs of this status"
+        );
       });
   });
   test("GET returns a 400 if trying to retrieve jobs from an id that is not valid", () => {
@@ -469,6 +475,17 @@ describe("GET /api/users/:user_id/:status should get all of a helper users accep
       .expect(404)
       .then(({ body }) => {
         expect(body.message).toBe("Path not found!");
+      });
+  });
+  test("GET returns a 404 if trying to retrieve jobs when there are no jobs with that status", () => {
+    return request(app)
+      .get("/api/users/2/requested")
+      .send()
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe(
+          "there is no user_id with jobs of this status"
+        );
       });
   });
 });
