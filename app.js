@@ -11,9 +11,7 @@ const {
   patchUser,
   getAcceptedHelperJobs,
   deleteJob,
-
   changeJobStatus,
-
   getExistingUser,
   getJobsByElder
 
@@ -27,7 +25,7 @@ const {
 
 app.use(express.json());
 
-app.get('/api/', getEndpointsInfo);
+app.get('/api', getEndpointsInfo);
 
 app.get("/api/jobs", getJobs);
 
