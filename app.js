@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 
 const {
+  getEndpointsInfo,
   getJobs,
   postJob,
   getSingleJob,
@@ -25,6 +26,8 @@ const {
 } = require("./controllers/errors.controllers.js");
 
 app.use(express.json());
+
+app.get('/api/', getEndpointsInfo);
 
 app.get("/api/jobs", getJobs);
 

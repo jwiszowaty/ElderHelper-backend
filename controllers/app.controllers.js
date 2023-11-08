@@ -17,6 +17,16 @@ const {
 
 } = require("../models/app.models.js");
 
+const fs = require('fs/promises')
+
+exports.getEndpointsInfo = (req, res, next) => {
+  fs.readFile(`${__dirname}/../endpoints.json`)
+  .then((result) =>{
+    res.status(200).send({endpoints: JSON.parse(result)})
+  })
+  .catch((err) => {next(err)})
+}
+
 exports.getJobs = (req, res, next) => {
     const {postcode} = req.query
     if (postcode) {
