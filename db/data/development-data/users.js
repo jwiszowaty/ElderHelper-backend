@@ -1,6 +1,15 @@
 module.exports = [
   {
-    phone_number: "7890123",
+    phone_number: "00000000000",
+    first_name: "UNASSIGNED",
+    surname: "DEFAULTHELPER",
+    is_elder: false,
+    postcode: "M11 1AA",
+    avatar_url: "",
+    profile_msg: "DUMMYUSER",
+  },
+  {
+    phone_number: "00007890123",
     first_name: "Ella",
     surname: "Martin",
     is_elder: true,
@@ -9,7 +18,7 @@ module.exports = [
     profile_msg: "Seeking companionship for walks in the park.",
   },
   {
-    phone_number: "8901234",
+    phone_number: "00008901234",
     first_name: "Michael",
     surname: "Lewis",
     is_elder: false,
@@ -18,7 +27,7 @@ module.exports = [
     profile_msg: "I/'m into DIY projects and sharing tips.",
   },
   {
-    phone_number: "9012345",
+    phone_number: "00009012345",
     first_name: "Chloe",
     surname: "White",
     is_elder: true,
@@ -27,7 +36,7 @@ module.exports = [
     profile_msg: "Offering my services for house-sitting.",
   },
   {
-    phone_number: "0123456",
+    phone_number: "00000123456",
     first_name: "Lucas",
     surname: "Harris",
     is_elder: false,
@@ -36,7 +45,7 @@ module.exports = [
     profile_msg: "Could use some help with household chores.",
   },
   {
-    phone_number: "1234568",
+    phone_number: "00001234568",
     first_name: "Zoe",
     surname: "Clark",
     is_elder: true,
@@ -45,7 +54,7 @@ module.exports = [
     profile_msg: "I organize community clean-up events, join us!",
   },
   {
-    phone_number: "2345679",
+    phone_number: "00002345679",
     first_name: "Aiden",
     surname: "Robinson",
     is_elder: false,
@@ -54,7 +63,7 @@ module.exports = [
     profile_msg: "Photographer available for events and portraits.",
   },
   {
-    phone_number: "3456780",
+    phone_number: "00003456780",
     first_name: "Sophia",
     surname: "Walker",
     is_elder: true,
@@ -63,7 +72,7 @@ module.exports = [
     profile_msg: "Looking for someone to teach me how to use a computer.",
   },
   {
-    phone_number: "4567891",
+    phone_number: "00004567891",
     first_name: "James",
     surname: "Allen",
     is_elder: false,
@@ -72,7 +81,7 @@ module.exports = [
     profile_msg: "Volunteering my time for tutoring high school students.",
   },
   {
-    phone_number: "5678902",
+    phone_number: "00005678902",
     first_name: "Grace",
     surname: "Young",
     is_elder: true,
@@ -81,7 +90,7 @@ module.exports = [
     profile_msg: "In need of transport to weekly doctor appointments.",
   },
   {
-    phone_number: "6789013",
+    phone_number: "00006789013",
     first_name: "Henry",
     surname: "King",
     is_elder: false,
@@ -90,7 +99,7 @@ module.exports = [
     profile_msg: "Available for pet sitting and care.",
   },
   {
-    phone_number: "7890124",
+    phone_number: "00007890124",
     first_name: "Mia",
     surname: "Thompson",
     is_elder: true,
@@ -99,7 +108,7 @@ module.exports = [
     profile_msg: "Enthusiastic about community gardening projects.",
   },
   {
-    phone_number: "8901235",
+    phone_number: "00008901235",
     first_name: "Oliver",
     surname: "Moore",
     is_elder: false,
@@ -108,7 +117,7 @@ module.exports = [
     profile_msg: "Looking for help with learning to paint.",
   },
   {
-    phone_number: "9012346",
+    phone_number: "00009012346",
     first_name: "Amelia",
     surname: "Lee",
     is_elder: true,
@@ -117,7 +126,7 @@ module.exports = [
     profile_msg: "I offer free yoga classes for beginners.",
   },
   {
-    phone_number: "0123457",
+    phone_number: "00000123457",
     first_name: "Ethan",
     surname: "Perez",
     is_elder: false,
@@ -126,7 +135,7 @@ module.exports = [
     profile_msg: "Computer whiz looking to help with tech issues.",
   },
   {
-    phone_number: "1234569",
+    phone_number: "00001234569",
     first_name: "Abigail",
     surname: "Davis",
     is_elder: true,
@@ -135,7 +144,7 @@ module.exports = [
     profile_msg: "Seeking assistance with grocery shopping.",
   },
   {
-    phone_number: "2345670",
+    phone_number: "00002345670",
     first_name: "Jackson",
     surname: "Miller",
     is_elder: false,
@@ -144,7 +153,7 @@ module.exports = [
     profile_msg: "Ready to volunteer for pet rescue services.",
   },
   {
-    phone_number: "3456781",
+    phone_number: "00003456781",
     first_name: "Madison",
     surname: "Anderson",
     is_elder: true,
@@ -153,7 +162,7 @@ module.exports = [
     profile_msg: "Graphic designer offering free workshops for teens.",
   },
   {
-    phone_number: "4567892",
+    phone_number: "00004567892",
     first_name: "Logan",
     surname: "Taylor",
     is_elder: false,
@@ -162,7 +171,7 @@ module.exports = [
     profile_msg: "Would appreciate help with garden maintenance.",
   },
   {
-    phone_number: "5678903",
+    phone_number: "00005678903",
     first_name: "Sophie",
     surname: "Hernandez",
     is_elder: true,
@@ -171,7 +180,7 @@ module.exports = [
     profile_msg: "Im looking to learn new crafts, any teachers out there?",
   },
   {
-    phone_number: "6789014",
+    phone_number: "00006789014",
     first_name: "Benjamin",
     surname: "Martinez",
     is_elder: false,
