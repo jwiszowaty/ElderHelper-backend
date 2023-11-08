@@ -9,9 +9,7 @@ const {
   fetchExistingUser,
   fetchAcceptedHelperJobs,
   jobToDelete,
-
   updateJobStatus,
-
   fetchJobsByElder, 
   fetchJobsByPostCode
 

@@ -96,6 +96,23 @@ describe("POST /api/jobs", () => {
         expect(Object.getOwnPropertyNames(body.job)).toEqual(requiredKeys);
       });
   });
+  it("should auto assign helper_id = 1 (dummy user) and status_id 1 (requested) when posting new request", ()=>{
+    const newJob = {
+      job_title: "Amazing new job",
+      job_desc: "Do it for me",
+      posted_date: "2023-11-06",
+      expiry_date: "2023-11-10",
+      elder_id: 2,
+      postcode: "M1 6JB",
+    };
+    return request(app)
+      .post("/api/jobs")
+      .send(newJob)
+      .then(({ body }) => {
+        expect(body.job.helper_id).toBe(1);
+        expect(body.job.status_id).toBe(1);
+      })
+  });
   it("should return 400 error when passed object with invalid elder_id", () => {
     const newJob = {
       job_title: "Amazing new job",
