@@ -4,9 +4,9 @@ const db = require('../connection');
 
 const seed = ({ userData, jobsData, statusData }) => { 
     return db
-      .query(`DROP TABLE IF EXISTS users;`)
+      .query(`DROP TABLE IF EXISTS jobs;`)
       .then(() => {
-        return db.query(`DROP TABLE IF EXISTS jobs;`);
+        return db.query(`DROP TABLE IF EXISTS users;`);
       })
       .then(() => {
         return db.query(`DROP TABLE IF EXISTS status;`);
@@ -15,7 +15,7 @@ const seed = ({ userData, jobsData, statusData }) => {
       .then(() => {
         const statusTablePromise = db.query(`
         CREATE TABLE status (
-          status_id INT,
+          status_id Serial PRIMARY KEY,
           status VARCHAR NOT NULL
         );`);
 
@@ -41,9 +41,9 @@ const seed = ({ userData, jobsData, statusData }) => {
           job_desc VARCHAR NOT NULL,
           posted_date DATE DEFAULT NOW(),
           expiry_date DATE DEFAULT NOW(), 
-          elder_id INT NOT NULL,
-          helper_id INT,
-          status_id INT NOT NULL DEFAULT 1,
+          elder_id INT REFERENCES users(user_id),
+          helper_id INT REFERENCES users(user_id),
+          status_id INT REFERENCES status(status_id) DEFAULT 1,
           postcode VARCHAR NOT NULL
         );`);
       })

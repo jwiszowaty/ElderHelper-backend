@@ -208,7 +208,7 @@ module.exports = [
     posted_date: "2023-12-10",
     expiry_date: "2023-12-24",
     elder_id: 20,
-    helper_id: 120,
+    helper_id: 12,
     status_id: 1,
     postcode: "M26 6ZZ",
   },
