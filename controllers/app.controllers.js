@@ -1,3 +1,4 @@
+const status = require("../db/data/test-data/status.js");
 const {
   fetchJobs,
   createJob,
@@ -8,8 +9,12 @@ const {
   fetchExistingUser,
   fetchAcceptedHelperJobs,
   jobToDelete,
+
+  updateJobStatus,
+
   fetchJobsByElder, 
   fetchJobsByPostCode
+
 } = require("../models/app.models.js");
 
 exports.getJobs = (req, res, next) => {
@@ -53,6 +58,7 @@ exports.postJob = (req, res, next) => {
 exports.patchJob = (req, res, next) => {
   const { job_id } = req.params;
   const toUpdate = req.body;
+
   fetchSingleJob(job_id)
     .then(() => {
       updateJob(toUpdate, job_id).then((job) => {
@@ -67,7 +73,10 @@ exports.patchJob = (req, res, next) => {
 exports.deleteJob = (req, res, next) => {
   const { job_id } = req.params;
   fetchSingleJob(job_id)
+
+
   .then(() => {
+
       jobToDelete(job_id);
     })
     .then(() => {
@@ -78,6 +87,8 @@ exports.deleteJob = (req, res, next) => {
     });
 };
 
+
+
 exports.getJobsByElder = (req, res, next) => {
   const {elder_id} = req.params;
   fetchJobsByElder(elder_id)
@@ -86,6 +97,7 @@ exports.getJobsByElder = (req, res, next) => {
   })
   .catch((err) => {next (err)})
 }
+
 
 exports.postNewUser = (req, res, next) => {
   const newUser = req.body;
@@ -129,6 +141,19 @@ exports.getAcceptedHelperJobs = (req, res, next) => {
   fetchAcceptedHelperJobs(user_id, status)
     .then((acceptedJobs) => {
       res.status(200).send({ acceptedJobs: acceptedJobs });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+exports.changeJobStatus = (req, res, next) => {
+  const { job_id } = req.params;
+  const { status_id } = req.body;
+
+  updateJobStatus(job_id, status_id)
+    .then((completedJob) => {
+      res.status(200).send({ completedJob: completedJob });
     })
     .catch((err) => {
       next(err);

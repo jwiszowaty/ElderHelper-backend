@@ -88,6 +88,7 @@ exports.fetchJobsByElder = (elder_id) => {
   })
 }
 
+
 exports.insertNewUser = (newUser) => {
   const newUserArr = Object.values(newUser);
 
@@ -131,6 +132,7 @@ exports.updateUser = (edit, userId) => {
       return rows[0];
     });
 };
+
 exports.fetchExistingUser = (phoneNumber) => {
   if (/^\d+$/.test(phoneNumber)) {
     return db
@@ -186,5 +188,31 @@ exports.fetchAcceptedHelperJobs = (userId, status) => {
       status: 404,
       message: "Path not found!",
     });
+  }
+};
+
+exports.updateJobStatus = (jobId, statusId) => {
+  if (statusId > 4 || statusId === undefined) {
+    return Promise.reject({ status: 400, message: "bad request" });
+  } else if (/^[0-9]+$/.test(jobId)) {
+    return db
+      .query(
+        `UPDATE jobs 
+                  SET status_id = 3
+                  WHERE job_id = $1 RETURNING*`,
+        [jobId]
+      )
+      .then(({ rows }) => {
+        if (rows.length === 0) {
+          console.log(rows);
+          return Promise.reject({
+            status: 404,
+            message: "job does not exist!",
+          });
+        }
+        return rows[0];
+      });
+  } else {
+    return Promise.reject({ status: 404, message: "job not found!" });
   }
 };

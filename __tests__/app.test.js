@@ -203,6 +203,11 @@ describe("Deleting jobs from the board", () => {
   });
 });
 
+
+describe("Deleting jobs from the board", () => {
+  test("DELETE responds with 204 status code", () => {
+    return request(app).delete("/api/jobs/1").expect(204);
+
 describe("GET jobs by elder id", () => {
   test('GET 200 responds jobs the elder has posted', () => {
     return request(app)
@@ -210,10 +215,27 @@ describe("GET jobs by elder id", () => {
       .expect(200)
       .then(({body}) => {
         expect(body.length).toBe(1)
-      })
+      }
   });
   test('GET 200 responds with empty array if elder has no jobs posted', () => {
     return request(app)
+
+      .delete(`/api/jobs/NOTANUMBER`)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("bad request");
+      });
+  });
+
+  test("404: returns error when comment_id does not exist", () => {
+    return request(app)
+      .delete(`/api/jobs/99999`)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("job not found");
+      });
+  });
+
     .get("/api/jobs/elder/5")
     .expect(200)
     .then(({body}) => {
@@ -236,6 +258,7 @@ describe("GET jobs by elder id", () => {
       expect(body.message).toBe("bad request")
     })
   })
+
 });
 
 describe("Route does not exist", () => {
@@ -420,6 +443,68 @@ describe("GET /api/users/:user_id/:status should get all of a helper users accep
   });
 });
 
+
+describe("PATCH /api/:job_id updates status when elder or helper changes it to completed", () => {
+  test("PATCH returns 200 and updated job object when helper or elder changes status to completed", () => {
+    const patchStatus = { status_id: 3 };
+    return request(app)
+      .patch("/api/1")
+      .send(patchStatus)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.completedJob).toMatchObject({
+          job_title: "Companionship",
+          job_desc:
+            "Looking for someone to keep me company and chat with me in the evenings.",
+          elder_id: 1,
+          helper_id: 7,
+          status_id: 3,
+        });
+      });
+  });
+  test("PATCH returns 404 and an error message for an invalid job ID", () => {
+    const patchStatus = { status_id: 3 };
+    return request(app)
+      .patch("/api/invalid-job-id")
+      .send(patchStatus)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("job not found!");
+      });
+  });
+  test("PATCH returns 404 and an error message for a valid but non-existent job Id", () => {
+    const patchStatus = { status_id: 3 };
+    return request(app)
+      .patch("/api/9999")
+      .send(patchStatus)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("job does not exist!");
+      });
+  });
+
+  test("PATCH returns 400 and an error message for a body missing the required fields", () => {
+    const patchStatus = {};
+    return request(app)
+      .patch("/api/1")
+      .send(patchStatus)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("bad request");
+      });
+  });
+  test("PATCH returns 400 and an error message for a non-existent status_id", () => {
+    const patchStatus = { status_id: 9999 };
+    return request(app)
+      .patch("/api/1")
+      .send(patchStatus)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("bad request");
+      });
+  });
+});
+
 describe("GET /api/users/:phone_number to check if a user exists for logging in", () => {
   test("GET: will return a 200 and a user object if the phone number exists in the db", () => {
     return request(app)
@@ -473,3 +558,4 @@ describe('GET /api/jobs?postcode=', () => {
         })
     })
   })
+
