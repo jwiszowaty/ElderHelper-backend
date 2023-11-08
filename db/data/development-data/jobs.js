@@ -8,6 +8,7 @@ module.exports = [
     elder_id: 1,
     helper_id: 10,
     status_id: 2,
+    postcode: "M7 7GG",
   },
   {
     job_title: "Grocery Shopping",
@@ -17,6 +18,7 @@ module.exports = [
     elder_id: 7,
     helper_id: 12,
     status_id: 1,
+    postcode: "M13 3MM",
   },
   {
     job_title: "Medication Reminder",
@@ -26,6 +28,7 @@ module.exports = [
     elder_id: 3,
     helper_id: 6,
     status_id: 3,
+    postcode: "M9 9II",
   },
   {
     job_title: "Transportation Assistance",
@@ -36,6 +39,7 @@ module.exports = [
     elder_id: 5,
     helper_id: 14,
     status_id: 2,
+    postcode: "M11 1KK",
   },
   {
     job_title: "Meal Preparation",
@@ -45,6 +49,7 @@ module.exports = [
     elder_id: 5,
     helper_id: 6,
     status_id: 1,
+    postcode: "M11 1KK",
   },
   {
     job_title: "House Cleaning",
@@ -54,6 +59,7 @@ module.exports = [
     elder_id: 7,
     helper_id: 8,
     status_id: 4,
+    postcode: "M13 3MM",
   },
   {
     job_title: "Outdoor Activities",
@@ -64,6 +70,7 @@ module.exports = [
     elder_id: 7,
     helper_id: 4,
     status_id: 1,
+    postcode: "M13 3MM",
   },
   {
     job_title: "Pet Care",
@@ -74,6 +81,7 @@ module.exports = [
     elder_id: 11,
     helper_id: 18,
     status_id: 2,
+    postcode: "M17 7QQ",
   },
   {
     job_title: "Tech Support",
@@ -84,6 +92,7 @@ module.exports = [
     elder_id: 7,
     helper_id: 14,
     status_id: 3,
+    postcode: "M13 3MM",
   },
   {
     job_title: "Yard Maintenance",
@@ -93,6 +102,7 @@ module.exports = [
     elder_id: 11,
     helper_id: 12,
     status_id: 4,
+    postcode: "M17 7QQ",
   },
   {
     job_title: "Reading Assistance",
@@ -103,6 +113,7 @@ module.exports = [
     elder_id: 7,
     helper_id: 16,
     status_id: 2,
+    postcode: "M13 3MM",
   },
   {
     job_title: "Transportation Assistance",
@@ -113,6 +124,7 @@ module.exports = [
     elder_id: 11,
     helper_id: 20,
     status_id: 1,
+    postcode: "M17 7QQ",
   },
   {
     job_title: "Art and Crafts",
@@ -123,6 +135,7 @@ module.exports = [
     elder_id: 13,
     helper_id: 2,
     status_id: 3,
+    postcode: "M19 9SS",
   },
   {
     job_title: "Tech Support",
@@ -133,6 +146,7 @@ module.exports = [
     elder_id: 15,
     helper_id: 4,
     status_id: 2,
+    postcode: "M21 1UU",
   },
   {
     job_title: "Exercise Partner",
@@ -143,6 +157,7 @@ module.exports = [
     elder_id: 15,
     helper_id: 6,
     status_id: 4,
+    postcode: "M21 1UU",
   },
   {
     job_title: "Music Appreciation",
@@ -152,6 +167,7 @@ module.exports = [
     elder_id: 17,
     helper_id: 16,
     status_id: 1,
+    postcode: "M23 3WW",
   },
   {
     job_title: "Language Tutoring",
@@ -161,6 +177,7 @@ module.exports = [
     elder_id: 17,
     helper_id: 8,
     status_id: 3,
+    postcode: "M23 3WW",
   },
   {
     job_title: "Transportation Assistance",
@@ -171,6 +188,7 @@ module.exports = [
     elder_id: 19,
     helper_id: 7,
     status_id: 2,
+    postcode: "M25 5YY",
   },
   {
     job_title: "Gardening",
@@ -181,6 +199,7 @@ module.exports = [
     elder_id: 19,
     helper_id: 6,
     status_id: 4,
+    postcode: "M25 5YY",
   },
   {
     job_title: "Movie Buddy",
@@ -191,5 +210,6 @@ module.exports = [
     elder_id: 20,
     helper_id: 120,
     status_id: 1,
+    postcode: "M26 6ZZ",
   },
 ];
