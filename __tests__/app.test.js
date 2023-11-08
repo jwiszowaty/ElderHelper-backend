@@ -69,7 +69,7 @@ describe("POST /api/jobs", () => {
       job_desc: "Do it for me",
       posted_date: "2023-11-06",
       expiry_date: "2023-11-10",
-      elder_id: 1,
+      elder_id: 2,
       postcode: "M1 6JB",
     };
     return request(app)
