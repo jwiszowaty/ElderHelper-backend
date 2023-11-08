@@ -6,20 +6,32 @@ const {
   updateJob,
   insertNewUser,
   updateUser,
+  fetchExistingUser,
   fetchAcceptedHelperJobs,
   jobToDelete,
+
   updateJobStatus,
+
+  fetchJobsByElder, 
+  fetchJobsByPostCode
+
 } = require("../models/app.models.js");
 
 exports.getJobs = (req, res, next) => {
-  fetchJobs()
-    .then((jobs) => {
-      res.status(200).send(jobs);
-    })
-    .catch((err) => {
-      next(err);
-    });
-};
+    const {postcode} = req.query
+    if (postcode) {
+      fetchJobsByPostCode(postcode)
+      .then((jobsByPostcode) => {
+        res.status(200).send(jobsByPostcode)
+      })
+      .catch((err) => {next(err)})
+    } else {
+      fetchJobs().then((jobs) =>{
+          res.status(200).send(jobs)
+      })
+      .catch((err) => {next(err)})
+    }
+  }
 
 exports.getSingleJob = (req, res, next) => {
   const { job_id } = req.params;
@@ -61,7 +73,10 @@ exports.patchJob = (req, res, next) => {
 exports.deleteJob = (req, res, next) => {
   const { job_id } = req.params;
   fetchSingleJob(job_id)
-    .then(() => {
+
+
+  .then(() => {
+
       jobToDelete(job_id);
     })
     .then(() => {
@@ -71,6 +86,18 @@ exports.deleteJob = (req, res, next) => {
       next(err);
     });
 };
+
+
+
+exports.getJobsByElder = (req, res, next) => {
+  const {elder_id} = req.params;
+  fetchJobsByElder(elder_id)
+  .then((jobs) => {
+    res.status(200).send(jobs)
+  })
+  .catch((err) => {next (err)})
+}
+
 
 exports.postNewUser = (req, res, next) => {
   const newUser = req.body;
@@ -89,7 +116,18 @@ exports.patchUser = (req, res, next) => {
 
   updateUser(edit, user_id)
     .then((updatedUser) => {
-      res.status(200).send({ updatedUser });
+      res.status(200).send({ updatedUser: updatedUser });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+exports.getExistingUser = (req, res, next) => {
+  const { phone_number } = req.params;
+  fetchExistingUser(phone_number)
+    .then((existingUser) => {
+      res.status(200).send({ user: existingUser });
     })
     .catch((err) => {
       next(err);

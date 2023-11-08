@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+
 const {
   getJobs,
   postJob,
@@ -9,7 +10,12 @@ const {
   patchUser,
   getAcceptedHelperJobs,
   deleteJob,
+
   changeJobStatus,
+
+  getExistingUser,
+  getJobsByElder
+
 } = require("./controllers/app.controllers.js");
 
 const {
@@ -20,7 +26,6 @@ const {
 
 app.use(express.json());
 
-//jobs endpoints
 app.get("/api/jobs", getJobs);
 
 app.get("/api/jobs/:job_id", getSingleJob);
@@ -37,11 +42,16 @@ app.delete("/api/jobs/:job_id", deleteJob);
 
 //user endpoints
 
+app.get('/api/jobs/elder/:elder_id', getJobsByElder)
+
 app.post("/api/users", postNewUser);
 
 app.patch("/api/users/:user_id", patchUser);
 
+app.get("/api/users/:phone_number", getExistingUser);
+
 //error handling
+
 app.use(handlePSQLErrors, handleCustomErrors, handleServerErrors);
 
 app.all("/api/*", (req, res, next) => {

@@ -43,7 +43,8 @@ const seed = ({ userData, jobsData, statusData }) => {
           expiry_date DATE DEFAULT NOW(), 
           elder_id INT NOT NULL,
           helper_id INT,
-          status_id INT NOT NULL DEFAULT 1
+          status_id INT NOT NULL DEFAULT 1,
+          postcode VARCHAR NOT NULL
         );`);
       })
 
@@ -85,7 +86,7 @@ const seed = ({ userData, jobsData, statusData }) => {
       })
       .then(() => {
         const insertJobsQueryString = format(
-          "INSERT INTO jobs (job_title, job_desc, posted_date, expiry_date, elder_id, helper_id, status_id) VALUES %L RETURNING *;",
+          "INSERT INTO jobs (job_title, job_desc, posted_date, expiry_date, elder_id, helper_id, status_id, postcode) VALUES %L RETURNING *;",
           jobsData.map(
             ({
               job_title,
@@ -95,6 +96,7 @@ const seed = ({ userData, jobsData, statusData }) => {
               elder_id,
               helper_id,
               status_id,
+              postcode
             }) => [
               job_title,
               job_desc,
@@ -103,6 +105,7 @@ const seed = ({ userData, jobsData, statusData }) => {
               elder_id,
               helper_id,
               status_id,
+              postcode
             ]
           )
         );
