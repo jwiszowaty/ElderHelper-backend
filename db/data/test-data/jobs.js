@@ -5,10 +5,10 @@ module.exports = [
       "Looking for someone to keep me company and chat with me in the evenings.",
     posted_date: "2023-11-06",
     expiry_date: "2023-11-20",
-    elder_id: 1,
+    elder_id: 3,
     helper_id: 6,
     status_id: 2,
-    postcode: "M1 1AA",
+    postcode: "M3 3CC",
   },
   {
     job_title: "Food Shopping",

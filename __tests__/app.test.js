@@ -29,7 +29,7 @@ describe("GET /api/jobs", () => {
             "elder_id",
             "helper_id",
             "status_id",
-            "postcode"
+            "postcode",
           ];
           expect(Object.getOwnPropertyNames(job)).toEqual(requiredKeys);
         });
@@ -37,51 +37,58 @@ describe("GET /api/jobs", () => {
   });
 });
 
-describe('POST /api/jobs', () => {
-    it('returns status code 201 and new job when passed valid job', () => {
-        const newJob = {
-        job_title:'Amazing new job',
-        job_desc: 'Do it for me',
-        posted_date: '2023-11-06',
-        expiry_date: '2023-11-10',
-        elder_id: 1,
-        postcode: 'M1 6JB'};
-        return request(app)
-        .post('/api/jobs')
-        .send(newJob)
-        .expect(201)
-    })
-    it('should return job object with relevant properties', () => {
-        const newJob = {
-            job_title:'Amazing new job',
-            job_desc: 'Do it for me',
-            posted_date: '2023-11-06',
-            expiry_date: '2023-11-10',
-            elder_id: 1,
-            postcode: 'M1 6JB'};
-        return request(app)
-        .post('/api/jobs')
-        .send(newJob)
-        .then(({body})=> {
-            expect(body.job.job_title).toBe('Amazing new job')
-            expect(body.job.job_desc).toBe('Do it for me')
-            const requiredKeys = ['job_id', 'job_title', 'job_desc', 'posted_date', 'expiry_date', 'elder_id', 'helper_id', 'status_id', 'postcode']
-            expect(Object.getOwnPropertyNames(body.job)).toEqual(requiredKeys);
-        })
-    })
-    it('should return 400 error when passed object with invalid elder_id', () => {
-        const newJob = {
-            job_title:'Amazing new job',
-            job_desc: 'Do it for me',
-            posted_date: '2023-11-06',
-            expiry_date: '2023-11-10',
-            elder_id: 'jeff'}
-        return request(app)
-        .post('/api/jobs')
-        .send(newJob)
-        .expect(400)
-    })
-})
+describe("POST /api/jobs", () => {
+  it("returns status code 201 and new job when passed valid job", () => {
+    const newJob = {
+      job_title: "Amazing new job",
+      job_desc: "Do it for me",
+      posted_date: "2023-11-06",
+      expiry_date: "2023-11-10",
+      elder_id: 1,
+      postcode: "M1 6JB",
+    };
+    return request(app).post("/api/jobs").send(newJob).expect(201);
+  });
+  it("should return job object with relevant properties", () => {
+    const newJob = {
+      job_title: "Amazing new job",
+      job_desc: "Do it for me",
+      posted_date: "2023-11-06",
+      expiry_date: "2023-11-10",
+      elder_id: 1,
+      postcode: "M1 6JB",
+    };
+    return request(app)
+      .post("/api/jobs")
+      .send(newJob)
+      .then(({ body }) => {
+        expect(body.job.job_title).toBe("Amazing new job");
+        expect(body.job.job_desc).toBe("Do it for me");
+        const requiredKeys = [
+          "job_id",
+          "job_title",
+          "job_desc",
+          "posted_date",
+          "expiry_date",
+          "elder_id",
+          "helper_id",
+          "status_id",
+          "postcode",
+        ];
+        expect(Object.getOwnPropertyNames(body.job)).toEqual(requiredKeys);
+      });
+  });
+  it("should return 400 error when passed object with invalid elder_id", () => {
+    const newJob = {
+      job_title: "Amazing new job",
+      job_desc: "Do it for me",
+      posted_date: "2023-11-06",
+      expiry_date: "2023-11-10",
+      elder_id: "jeff",
+    };
+    return request(app).post("/api/jobs").send(newJob).expect(400);
+  });
+});
 
 describe("GET /api/jobs/:job_id", () => {
   it("returns status code 200 and array containing single job object", () => {
@@ -99,7 +106,7 @@ describe("GET /api/jobs/:job_id", () => {
           "elder_id",
           "helper_id",
           "status_id",
-          "postcode"
+          "postcode",
         ];
         expect(Object.getOwnPropertyNames(body.job[0])).toEqual(requiredKeys);
       });
@@ -145,7 +152,7 @@ describe("PATCH /api/jobs/:job_id", () => {
           "elder_id",
           "helper_id",
           "status_id",
-          "postcode"
+          "postcode",
         ];
         expect(Object.getOwnPropertyNames(body.job)).toEqual(requiredKeys);
       });
@@ -203,27 +210,44 @@ describe("Deleting jobs from the board", () => {
   });
 });
 
-
 describe("Deleting jobs from the board", () => {
   test("DELETE responds with 204 status code", () => {
     return request(app).delete("/api/jobs/1").expect(204);
-
-describe("GET jobs by elder id", () => {
-  test('GET 200 responds jobs the elder has posted', () => {
-    return request(app)
-      .get("/api/jobs/elder/1")
-      .expect(200)
-      .then(({body}) => {
-        expect(body.length).toBe(1)
-      }
   });
-  test('GET 200 responds with empty array if elder has no jobs posted', () => {
+  test("400: returns error when string type id is passed", () => {
     return request(app)
-
       .delete(`/api/jobs/NOTANUMBER`)
       .expect(400)
       .then(({ body }) => {
         expect(body.message).toBe("bad request");
+      });
+  });
+  test("404: returns error when comment_id does not exist", () => {
+    return request(app)
+      .delete(`/api/jobs/99999`)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("job not found");
+      });
+  });
+});
+
+describe("GET jobs by elder id", () => {
+  test("GET 200 responds jobs the elder has posted", () => {
+    return request(app)
+      .get("/api/jobs/elder/5")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.length).toBe(2);
+      });
+  });
+
+  test("GET 200 responds with empty array if elder has no jobs posted", () => {
+    return request(app)
+      .get("/api/jobs/elder/1")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.length).toBe(0);
       });
   });
 
@@ -236,29 +260,22 @@ describe("GET jobs by elder id", () => {
       });
   });
 
-    .get("/api/jobs/elder/5")
-    .expect(200)
-    .then(({body}) => {
-      expect(body.length).toBe(0)
-    })
-  })
-  test('GET 404 responds with error message when valid but non existent id is passed', () => {
+  test("GET 404 responds with error message when valid but non existent id is passed", () => {
     return request(app)
-    .get("/api/jobs/elder/59127")
-    .expect(404)
-    .then(({body}) => {
-      expect(body.message).toBe("User does not exist")
-    })
-  })
-  test('GET 404 responds with error message when invalid id is passed', () => {
+      .get("/api/jobs/elder/59127")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.message).toBe("User does not exist");
+      });
+  });
+  test("GET 404 responds with error message when invalid id is passed", () => {
     return request(app)
-    .get("/api/jobs/elder/abc")
-    .expect(400)
-    .then(({body}) => {
-      expect(body.message).toBe("bad request")
-    })
-  })
-
+      .get("/api/jobs/elder/abc")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("bad request");
+      });
+  });
 });
 
 describe("Route does not exist", () => {
@@ -357,7 +374,7 @@ describe("PATCH /api/users/:user_id", () => {
         expect(body.message).toBe("bad request");
       });
   });
-test("PATCH: returns 404 status code if tries to edit a user with a user_id that does not exist", () => {
+  test("PATCH: returns 404 status code if tries to edit a user with a user_id that does not exist", () => {
     const patchUser = {
       phone_number: "07950487263",
       first_name: "Jane",
@@ -374,7 +391,7 @@ test("PATCH: returns 404 status code if tries to edit a user with a user_id that
         expect(body.message).toBe("user_id does not exist");
       });
   });
-test("PATCH: returns 400 status code if tries to edit a user with an invalid id", () => {
+  test("PATCH: returns 400 status code if tries to edit a user with an invalid id", () => {
     const patchUser = {
       phone_number: "07950487263",
       first_name: "Jane",
@@ -391,7 +408,6 @@ test("PATCH: returns 400 status code if tries to edit a user with an invalid id"
         expect(body.message).toBe("bad request");
       });
   });
-  
 });
 
 describe("GET /api/users/:user_id/:status should get all of a helper users accepted jobs, it will get all the jobs for a particular user filtered by the status", () => {
@@ -407,7 +423,7 @@ describe("GET /api/users/:user_id/:status should get all of a helper users accep
             job_title: "Companionship",
             job_desc:
               "Looking for someone to keep me company and chat with me in the evenings.",
-            elder_id: 1,
+            elder_id: 3,
             helper_id: 6,
             status_id: 2,
           },
@@ -443,7 +459,6 @@ describe("GET /api/users/:user_id/:status should get all of a helper users accep
   });
 });
 
-
 describe("PATCH /api/:job_id updates status when elder or helper changes it to completed", () => {
   test("PATCH returns 200 and updated job object when helper or elder changes status to completed", () => {
     const patchStatus = { status_id: 3 };
@@ -456,8 +471,8 @@ describe("PATCH /api/:job_id updates status when elder or helper changes it to c
           job_title: "Companionship",
           job_desc:
             "Looking for someone to keep me company and chat with me in the evenings.",
-          elder_id: 1,
-          helper_id: 7,
+          elder_id: 3,
+          helper_id: 6,
           status_id: 3,
         });
       });
@@ -540,22 +555,21 @@ describe("GET /api/users/:phone_number to check if a user exists for logging in"
   });
 });
 
-describe('GET /api/jobs?postcode=', () => {
-    it('returns jobs with queried postcode', () => {
-          return request(app)
-          .get('/api/jobs?postcode=M4')
-          .expect(200)
-          .then(({body}) => {
-            expect(body.length).toBe(1)
-          })
-      })
-      it('returns empty array when queried postcode with no jobs', () => {
-        return request(app)
-        .get('/api/jobs?postcode=M99')
-        .expect(200)
-        .then(({body}) => {
-          expect(body.length).toBe(0)
-        })
-    })
-  })
-
+describe("GET /api/jobs?postcode=", () => {
+  it("returns jobs with queried postcode", () => {
+    return request(app)
+      .get("/api/jobs?postcode=M4")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.length).toBe(0);
+      });
+  });
+  it("returns empty array when queried postcode with no jobs", () => {
+    return request(app)
+      .get("/api/jobs?postcode=M99")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.length).toBe(0);
+      });
+  });
+});
