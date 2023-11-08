@@ -30,7 +30,7 @@ exports.fetchSingleJob = (job_id) => {
 };
 
 exports.createJob = (job) => {
-    return db.query(`INSERT INTO jobs (job_title, job_desc, posted_date, expiry_date, elder_id, postcode) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`, [job.job_title, job.job_desc, job.posted_date, job.expiry_date, job.elder_id, job.postcode]).then(({rows}) => {
+    return db.query(`INSERT INTO jobs (job_title, job_desc, posted_date, expiry_date, elder_id, helper_id, postcode) VALUES ($1, $2, $3, $4, $5, '1', $6) RETURNING *;`, [job.job_title, job.job_desc, job.posted_date, job.expiry_date, job.elder_id, job.postcode]).then(({rows}) => {
         return rows[0]
     })
 }
@@ -204,7 +204,6 @@ exports.updateJobStatus = (jobId, statusId) => {
       )
       .then(({ rows }) => {
         if (rows.length === 0) {
-          console.log(rows);
           return Promise.reject({
             status: 404,
             message: "job does not exist!",
