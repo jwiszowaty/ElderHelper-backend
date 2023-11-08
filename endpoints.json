@@ -1,1 +1,142 @@
-// endpoints here
+{
+    "GET /api": {
+      "description": "serves up a json representation of all the available endpoints of the api",
+      "queries": [],
+      "exampleResponse": {
+        "endpoints": [{ "GET /api/jobs": "serves an array of all jobs", "GET /api/jobs/:job_id": "serves an array containing single job object woth specific job_id" }]
+      }
+    },
+    "GET /api/jobs": {
+      "description": "serves an array of all jobs",
+      "queries": [],
+      "exampleResponse": {
+        "jobs": [{
+            "job_id": 1,
+            "job_title": "Companionship",
+            "job_desc": "Looking for someone to keep me company and chat with me in the evenings.",
+            "posted_date": "2023-11-06T00:00:00.000Z",
+            "expiry_date": "2023-11-20T00:00:00.000Z",
+            "elder_id": 1,
+            "helper_id": 6,
+            "status_id": 2,
+            "postcode": "M6 6FF"
+            }]
+      }
+    },
+    "GET /api/jobs/:job_id": {
+      "description": "serves an array containing single job object with specific job_id",
+      "queries": ["job_id"],
+      "exampleResponse": {
+        "job": [
+          {
+                "job_id": 2,
+                "job_title": "Job title",
+                "job_desc": "Job description",
+                "posted_date": "2023-11-08T00:00:00.000Z",
+                "expiry_date": "2023-11-15T00:00:00.000Z",
+                "elder_id": 3,
+                "helper_id": 8,
+                "status_id": 1,
+                "postcode": "M5 5EE"
+                }
+        ]
+      }
+    },
+    "GET /api/jobs/elder/:elder_id": {
+      "description": "serves an array of all job objects posted by specific elder",
+      "queries": ["elder_id"],
+      "exampleResponse": {
+        "jobs": [
+            {"job_id": 1,
+            "job_title": "Job title",
+            "job_desc": "Job description",
+            "posted_date": "2023-11-06T00:00:00.000Z",
+            "expiry_date": "2023-11-20T00:00:00.000Z",
+            "elder_id": 1,
+            "helper_id": 6,
+            "status_id": 2,
+            "postcode": "M6 6FF"}
+            ]
+      }
+    },
+    "POST /api/jobs": {
+      "description": "adds new job to database and serves new job",
+      "queries": ["job_title", "job_desc", "expiry_date"],
+      "exampleResponse": {
+        "job": [{"job_id": 7,
+        "job_title": "New job",
+        "job_desc": "New job description",
+        "posted_date": "2023-11-06T00:00:00.000Z",
+        "expiry_date": "2023-11-20T00:00:00.000Z",
+        "elder_id": 1,
+        "helper_id": "",
+        "status_id": 1,
+        "postcode": "M12 3AB"}]
+      }
+    },
+    "PATCH /api/jobs/:job_id": {
+      "description": "amends job with specific job_id and serves updated job",
+      "queries": ["job_id", "job_title", "job_desc", "expiry_date"],
+      "exampleResponse": {
+        "job": [{"job_id": 7,
+        "job_title": "Amended job",
+        "job_desc": "Amended job description",
+        "posted_date": "2023-11-06T00:00:00.000Z",
+        "expiry_date": "2023-11-24T00:00:00.000Z",
+        "elder_id": 1,
+        "helper_id": "",
+        "status_id": 1,
+        "postcode": "M12 3AB"}]
+      }
+    },
+    "DELETE /api/jobs/:job_id": {
+      "description": "deletes job with specific job_id",
+      "queries": ["job_id"],
+      "exampleResponse": {}
+    },
+  "GET /api/users/:phone_number": {
+    "description": "serves an array containing single user object with specific phone_number",
+    "queries": ["phone_number"],
+    "exampleResponse": {
+        "user":   [{
+            "phone_number": "00006789012",
+            "first_name": "Firstname",
+            "surname": "Surname",
+            "is_elder": false,
+            "postcode": "M6 6FF",
+            "avatar_url": "https://example.com/avatars/example.jpg",
+            "profile_msg": "Profile message"
+          }]
+        }
+    },
+    "POST /api/users": {
+        "description": "adds new user to database and serves new user",
+        "queries": ["phone_number", "first_name", "surname", "is_elder", "postcode"],
+        "exampleResponse": {
+            "user":   [{
+                "phone_number": "00006789012",
+                "first_name": "Firstname",
+                "surname": "Surname",
+                "is_elder": false,
+                "postcode": "M6 6FF",
+                "avatar_url": "https://example.com/avatars/default.jpg",
+                "profile_msg": ""
+              }]
+            }
+        },
+    "PATCH /api/users/:user_id": {
+        "description": "amends user with specific user_id and serves updated job",
+        "queries": ["phone_number", "first_name", "surname", "postode", "avatar_url", "profile_msg"],
+        "exampleResponse": {
+            "user":   [{
+                "phone_number": "00006789012",
+                "first_name": "Amended Firstname",
+                "surname": "Amended Surname",
+                "is_elder": false,
+                "postcode": "M1 6FF",
+                "avatar_url": "https://example.com/avatars/newexample.jpg",
+                "profile_msg": "Amended profile message"
+              }]
+            }
+      }
+  }

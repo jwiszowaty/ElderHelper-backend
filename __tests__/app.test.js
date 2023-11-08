@@ -12,6 +12,20 @@ afterAll(() => {
   db.end();
 });
 
+describe("GET /api", () => {
+  it("returns status code 200 with contents of endpoints.json as object", () => {
+    return request(app)
+    .get('/api')
+    .expect(200)
+    .then((response) => {
+      expect(typeof response.body.endpoints).toBe('object')
+      expect((response.body.endpoints).hasOwnProperty('GET /api')).toBe(true)
+      expect((response.body.endpoints).hasOwnProperty('GET /api/jobs')).toBe(true)
+      expect((response.body.endpoints).hasOwnProperty('GET /api/jobs/:job_id')).toBe(true)
+    })
+  })
+})
+
 describe("GET /api/jobs", () => {
   it("returns status code 200 and array of job objects", () => {
     return request(app)
