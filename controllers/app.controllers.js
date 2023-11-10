@@ -13,6 +13,7 @@ const {
   fetchJobsByElder,
   fetchJobsByPostCode,
   fetchAllUsers,
+  fetchChatMessages,
 } = require("../models/app.models.js");
 
 const fs = require("fs/promises");
@@ -182,10 +183,12 @@ exports.getAllUsers = (req, res, next) => {
 };
 
 exports.getChatMessages = (req, res, next) => {
-  fetchChatMessages()
+  const { user_id } = req.params;
+  const { chatroom } = req.query;
+
+  fetchChatMessages(user_id, chatroom)
     .then((response) => {
-      console.log("IN CONTROLLERS \n", response);
-      res.statis(200).send(response);
+      res.status(200).send(response);
     })
     .catch((err) => {
       next(err);
