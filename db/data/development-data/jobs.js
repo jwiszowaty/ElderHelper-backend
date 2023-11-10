@@ -207,7 +207,7 @@ module.exports = [
       "Looking for a movie companion to watch and discuss films together.",
     posted_date: "2023-11-07",
     expiry_date: "2023-12-24",
-    elder_id: 21,
+    elder_id: 20,
     helper_id: 1,
     status_id: 1,
     postcode: "M26 6ZZ",
