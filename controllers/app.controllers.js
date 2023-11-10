@@ -13,6 +13,7 @@ const {
   fetchJobsByElder,
   fetchJobsByPostCode,
   fetchAllUsers,
+  fetchJobsUsers,
   fetchChatMessages,
 } = require("../models/app.models.js");
 
@@ -189,6 +190,16 @@ exports.getChatMessages = (req, res, next) => {
   fetchChatMessages(user_id, chatroom)
     .then((response) => {
       res.status(200).send(response);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+exports.getJobsUsers = (req, res, next) => {
+  fetchJobsUsers()
+    .then((jobsUsers) => {
+      res.status(200).send(jobsUsers);
     })
     .catch((err) => {
       next(err);

@@ -267,3 +267,15 @@ exports.fetchChatMessages = (user_id, chatroom_id) => {
       }
     });
 };
+
+exports.fetchJobsUsers = () => {
+  return db.query(
+    `SELECT * 
+    FROM jobs
+    JOIN users
+    ON jobs.elder_id = users.user_id;`)
+    .then(({ rows }) => {
+      console.log(rows)
+      return rows;
+    })
+}
