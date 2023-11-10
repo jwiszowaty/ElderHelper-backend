@@ -27,7 +27,6 @@ const {
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 
-const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const socketio = require("socket.io");
@@ -39,26 +38,6 @@ const server = require("http").Server(app);
 const io = socketio(server);
 
 dotenv.config();
-
-// mongoose
-//   .connect(
-//     "mongodb+srv://27Stanley:8LxgdezUA22AOiP9@cluster0.7tkwyvj.mongodb.net/",
-//     {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//     }
-//   )
-//   .then(() => {
-//     console.log("connected to mongoDB");
-//   })
-//   .catch((err) => {
-//     console.log(err, "<<< error to mongo here");
-//   });
-
-// const connection = mongoose.connection;
-// connection.once("open", () => {
-//   console.log("MongoDB connection established successfully");
-// });
 
 app.use(cors());
 
