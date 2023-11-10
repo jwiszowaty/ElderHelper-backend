@@ -1,26 +1,26 @@
 module.exports = [
-  { elder_id: 4, helper_id: 7, chat_room_id: 1, message_body: "Hello there!" },
+  { elder_id: 4, helper_id: 3, chat_room_id: 1, message_body: "Hello there!" },
   {
     elder_id: 4,
-    helper_id: 7,
+    helper_id: 3,
     chat_room_id: 1,
     message_body: "How are you today?",
   },
   {
     elder_id: 4,
-    helper_id: 7,
+    helper_id: 3,
     chat_room_id: 1,
     message_body: "I need some assistance with a task.",
   },
   {
     elder_id: 4,
-    helper_id: 7,
+    helper_id: 3,
     chat_room_id: 1,
     message_body: "Sure, I'm here to help!",
   },
   {
     elder_id: 4,
-    helper_id: 7,
+    helper_id: 3,
     chat_room_id: 1,
     message_body: "What do you need help with?",
   },

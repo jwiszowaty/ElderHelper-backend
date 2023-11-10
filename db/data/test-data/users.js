@@ -1,5 +1,14 @@
 module.exports = [
   {
+    phone_number: "00000000000",
+    first_name: "UNASSIGNED",
+    surname: "DEFAULTHELPER",
+    is_elder: false,
+    postcode: "M11 1AA",
+    avatar_url: "",
+    profile_msg: "DUMMYUSER",
+  },
+  {
     phone_number: "1234567",
     first_name: "John",
     surname: "Doe",

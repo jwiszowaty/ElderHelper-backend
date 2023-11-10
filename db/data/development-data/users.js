@@ -14,7 +14,7 @@ module.exports = [
     surname: "Martin",
     is_elder: true,
     postcode: "M7 7GG",
-    avatar_url: "https://example.com/avatars/ellamartin.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1699470397622-00d36dab3812",
     profile_msg: "Seeking companionship for walks in the park.",
   },
   {
@@ -23,7 +23,7 @@ module.exports = [
     surname: "Lewis",
     is_elder: false,
     postcode: "M8 8HH",
-    avatar_url: "https://example.com/avatars/michaellewis.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1699536813782-54998ebe0578",
     profile_msg: "I/'m into DIY projects and sharing tips.",
   },
   {
@@ -32,7 +32,7 @@ module.exports = [
     surname: "White",
     is_elder: true,
     postcode: "M9 9II",
-    avatar_url: "https://example.com/avatars/chloewhite.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1699519337091-8499c51d9186",
     profile_msg: "Offering my services for house-sitting.",
   },
   {
@@ -41,7 +41,7 @@ module.exports = [
     surname: "Harris",
     is_elder: false,
     postcode: "M10 0JJ",
-    avatar_url: "https://example.com/avatars/lucasharris.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1699560506054-2d7a189a6321",
     profile_msg: "Could use some help with household chores.",
   },
   {
@@ -50,7 +50,7 @@ module.exports = [
     surname: "Clark",
     is_elder: true,
     postcode: "M11 1KK",
-    avatar_url: "https://example.com/avatars/zoeclass.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1698901242755-a8f0b0e464a7",
     profile_msg: "I organize community clean-up events, join us!",
   },
   {
@@ -59,7 +59,7 @@ module.exports = [
     surname: "Robinson",
     is_elder: false,
     postcode: "M12 2LL",
-    avatar_url: "https://example.com/avatars/aidenrobinson.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1699269839642-73278c8ac64e",
     profile_msg: "Photographer available for events and portraits.",
   },
   {
@@ -68,7 +68,7 @@ module.exports = [
     surname: "Walker",
     is_elder: true,
     postcode: "M13 3MM",
-    avatar_url: "https://example.com/avatars/sophiawalker.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1699116550661-bea051952f96",
     profile_msg: "Looking for someone to teach me how to use a computer.",
   },
   {
@@ -77,7 +77,7 @@ module.exports = [
     surname: "Allen",
     is_elder: false,
     postcode: "M14 4NN",
-    avatar_url: "https://example.com/avatars/jamesallen.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1699470218696-be7d3f53074a",
     profile_msg: "Volunteering my time for tutoring high school students.",
   },
   {
@@ -86,7 +86,7 @@ module.exports = [
     surname: "Young",
     is_elder: true,
     postcode: "M15 5OO",
-    avatar_url: "https://example.com/avatars/graceyoung.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1699484174858-1fd6c24944c8",
     profile_msg: "In need of transport to weekly doctor appointments.",
   },
   {
@@ -95,7 +95,7 @@ module.exports = [
     surname: "King",
     is_elder: false,
     postcode: "M16 6PP",
-    avatar_url: "https://example.com/avatars/henryking.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1699081756366-7035f33d99eb",
     profile_msg: "Available for pet sitting and care.",
   },
   {
@@ -104,7 +104,7 @@ module.exports = [
     surname: "Thompson",
     is_elder: true,
     postcode: "M17 7QQ",
-    avatar_url: "https://example.com/avatars/miathompson.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1699378999301-8c88a6a237d9",
     profile_msg: "Enthusiastic about community gardening projects.",
   },
   {
@@ -113,7 +113,7 @@ module.exports = [
     surname: "Moore",
     is_elder: false,
     postcode: "M18 8RR",
-    avatar_url: "https://example.com/avatars/olivermoore.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7",
     profile_msg: "Looking for help with learning to paint.",
   },
   {
@@ -122,7 +122,7 @@ module.exports = [
     surname: "Lee",
     is_elder: true,
     postcode: "M19 9SS",
-    avatar_url: "https://example.com/avatars/amelialee.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1518977676601-b53f82aba655",
     profile_msg: "I offer free yoga classes for beginners.",
   },
   {
@@ -131,7 +131,7 @@ module.exports = [
     surname: "Perez",
     is_elder: false,
     postcode: "M20 0TT",
-    avatar_url: "https://example.com/avatars/ethanperez.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1503525537183-c84679c9147f",
     profile_msg: "Computer whiz looking to help with tech issues.",
   },
   {
@@ -140,7 +140,7 @@ module.exports = [
     surname: "Davis",
     is_elder: true,
     postcode: "M21 1UU",
-    avatar_url: "https://example.com/avatars/abigaildavis.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
     profile_msg: "Seeking assistance with grocery shopping.",
   },
   {
@@ -149,7 +149,7 @@ module.exports = [
     surname: "Miller",
     is_elder: false,
     postcode: "M22 2VV",
-    avatar_url: "https://example.com/avatars/jacksonmiller.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1438283173091-5dbf5c5a3206",
     profile_msg: "Ready to volunteer for pet rescue services.",
   },
   {
@@ -158,7 +158,7 @@ module.exports = [
     surname: "Anderson",
     is_elder: true,
     postcode: "M23 3WW",
-    avatar_url: "https://example.com/avatars/madisonanderson.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1497752531616-c3afd9760a11",
     profile_msg: "Graphic designer offering free workshops for teens.",
   },
   {
@@ -167,7 +167,7 @@ module.exports = [
     surname: "Taylor",
     is_elder: false,
     postcode: "M24 4XX",
-    avatar_url: "https://example.com/avatars/logantaylor.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1594634932563-cb50acd10766",
     profile_msg: "Would appreciate help with garden maintenance.",
   },
   {
@@ -176,7 +176,7 @@ module.exports = [
     surname: "Hernandez",
     is_elder: true,
     postcode: "M25 5YY",
-    avatar_url: "https://example.com/avatars/sophiehernandez.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1561567131-f7d83083aee0",
     profile_msg: "Im looking to learn new crafts, any teachers out there?",
   },
   {
@@ -185,7 +185,7 @@ module.exports = [
     surname: "Martinez",
     is_elder: false,
     postcode: "M26 6ZZ",
-    avatar_url: "https://example.com/avatars/benjaminmartinez.jpg",
+    avatar_url: "https://images.unsplash.com/photo-1617519478819-9f578a5df62f",
     profile_msg: "Join me for weekend cycling and adventure.",
   },
 ];
