@@ -3,6 +3,7 @@ const request = require("supertest");
 const db = require("../db/connection.js");
 const seed = require("../db/seeds/seed.js");
 const data = require("../db/data/test-data/index.js");
+require("jest-sorted");
 
 beforeEach(() => {
   return seed(data);
@@ -633,14 +634,15 @@ describe("GET /api/users", () => {
   });
 });
 
-// describe.only("GET /api/messages/:elder_id?chatroom=", () => {
-//   it("returns a filtered list of chats sorted by chat_id from lowest to highest", () => {
-//     return request(app)
-//       .get("/api/messages/:user_id?chatroom=1")
-//       .expect(200)
-//       .then(({ body }) => {
-//         console.log(body, "<<<<<IN TEST HEREERERE");
-//         expect(typeof body).toBe("object");
-//       });
-//   });
-// });
+describe("GET /api/messages/:elder_id?chatroom=", () => {
+  it("returns a filtered list of chats sorted by chat_id from lowest to highest", () => {
+    return request(app)
+      .get("/api/messages/4?chatroom=1")
+      .expect(200)
+      .then(({ body }) => {
+        expect(typeof body).toBe("object");
+        expect(body).toHaveLength(5);
+        expect(body).toBeSorted({ key: body.message_id });
+      });
+  });
+});

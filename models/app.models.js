@@ -233,10 +233,44 @@ exports.fetchAllUsers = () => {
   });
 };
 
-exports.fetchChatMessages = () => {
-  fetchMessageQuery = `
-  SELECT * FROM messages
-  WHERE user_id = $1 AND chat_room_id = $2
-  ORDER BY message_id ASC
+exports.fetchChatMessages = (user_id, chatroom_id) => {
+  // console.log(user_id, "<< user id\n", chatroom_id, "<<chatroom id");
+
+  const isElderQuery = `
+  SELECT first_name, is_elder FROM users
+  WHERE user_id = $1;
   `;
+
+  const fetchMessageQueryElder = `
+  SELECT * FROM messages
+  WHERE elder_id = $1 AND chat_room_id = $2
+  ORDER BY message_id ASC;
+  `;
+
+  const fetchMessageQueryHelper = `
+  SELECT * FROM messages
+  WHERE helper_id = $1 AND chat_room_id = $2
+  ORDER BY message_id ASC;
+  `;
+
+  return db
+    .query(isElderQuery, [user_id])
+    .then(({ rows }) => {
+      return rows[0];
+    })
+    .then((result) => {
+      if (result.is_elder === true) {
+        return db
+          .query(fetchMessageQueryElder, [user_id, chatroom_id])
+          .then(({ rows }) => {
+            return rows;
+          });
+      } else {
+        return db
+          .query(fetchMessageQueryHelper, [user_id, chatroom_id])
+          .then(({ rows }) => {
+            return rows;
+          });
+      }
+    });
 };

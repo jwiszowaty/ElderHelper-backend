@@ -113,6 +113,8 @@ app.patch("/api/users/:user_id", patchUser);
 
 app.get("/api/users/:phone_number", getExistingUser);
 
+//Chat endpoints
+
 app.get("/api/users", getAllUsers);
 
 app.get("/api/messages/:user_id", getChatMessages);
