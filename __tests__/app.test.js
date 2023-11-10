@@ -287,7 +287,7 @@ describe("GET jobs by elder id", () => {
       });
   });
 
-  test("404: returns error when comment_id does not exist", () => {
+  test("404: returns error when job_id does not exist", () => {
     return request(app)
       .delete(`/api/jobs/99999`)
       .expect(404)
@@ -384,6 +384,7 @@ describe("PATCH /api/users/:user_id", () => {
       is_elder: false,
       postcode: "M2 2CT",
       avatar_url: "https://example.com/avatars/janesmith.jpg",
+      profile_msg: "Hello, my name is Jane",
     };
     return request(app)
       .patch("/api/users/2")
@@ -397,6 +398,7 @@ describe("PATCH /api/users/:user_id", () => {
           is_elder: false,
           postcode: "M2 2CT",
           avatar_url: "https://example.com/avatars/janesmith.jpg",
+          profile_msg: "Hello, my name is Jane",
         });
       });
   });
@@ -418,9 +420,10 @@ describe("PATCH /api/users/:user_id", () => {
       is_elder: false,
       postcode: "M2 2CT",
       avatar_url: "https://example.com/avatars/janesmith.jpg",
+      profile_msg: "Hello, my name is Jane",
     };
     return request(app)
-      .patch("/api/users/22")
+      .patch("/api/users/220")
       .send(patchUser)
       .expect(404)
       .then(({ body }) => {

@@ -121,8 +121,8 @@ exports.updateUser = (edit, userId) => {
   return db
     .query(
       `UPDATE users
-         SET phone_number = $1, first_name = $2, surname= $3, is_elder = $4, postcode = $5, avatar_url = $6
-         WHERE user_id = $7
+         SET phone_number = $1, first_name = $2, surname= $3, is_elder = $4, postcode = $5, avatar_url = $6, profile_msg = $7
+         WHERE user_id = $8
          RETURNING*;`,
       editArr
     )
