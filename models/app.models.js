@@ -47,13 +47,6 @@ exports.createJob = (job) => {
 };
 
 exports.updateJob = (toUpdate, job_id) => {
-  // if (new Date() < new Date(toUpdate.expiry_date)) {
-  //     console.log('in error')
-  //     return Promise.reject({
-  //         status: 400,
-  //         message: 'bad request'
-  //     })
-  // }
   return db
     .query(
       `UPDATE jobs SET job_title = $1, job_desc = $2, expiry_date = $3 WHERE job_id = $4 RETURNING *;`,
