@@ -1,4 +1,4 @@
-const app = require("../app.js");
+const { app } = require("../app.js");
 const request = require("supertest");
 const db = require("../db/connection.js");
 const seed = require("../db/seeds/seed.js");
@@ -96,7 +96,7 @@ describe("POST /api/jobs", () => {
         expect(Object.getOwnPropertyNames(body.job)).toEqual(requiredKeys);
       });
   });
-  it("should auto assign helper_id = 1 (dummy user) and status_id 1 (requested) when posting new request", ()=>{
+  it("should auto assign helper_id = 1 (dummy user) and status_id 1 (requested) when posting new request", () => {
     const newJob = {
       job_title: "Amazing new job",
       job_desc: "Do it for me",
@@ -111,7 +111,7 @@ describe("POST /api/jobs", () => {
       .then(({ body }) => {
         expect(body.job.helper_id).toBe(1);
         expect(body.job.status_id).toBe(1);
-      })
+      });
   });
   it("should return 400 error when passed object with invalid elder_id", () => {
     const newJob = {
@@ -621,3 +621,26 @@ describe("GET /api/jobs?postcode=", () => {
       });
   });
 });
+
+describe("GET /api/users", () => {
+  it("returns all users", () => {
+    return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then(({ body }) => {
+        expect(typeof body).toBe("object");
+      });
+  });
+});
+
+// describe.only("GET /api/messages/:elder_id?chatroom=", () => {
+//   it("returns a filtered list of chats sorted by chat_id from lowest to highest", () => {
+//     return request(app)
+//       .get("/api/messages/:user_id?chatroom=1")
+//       .expect(200)
+//       .then(({ body }) => {
+//         console.log(body, "<<<<<IN TEST HEREERERE");
+//         expect(typeof body).toBe("object");
+//       });
+//   });
+// });
