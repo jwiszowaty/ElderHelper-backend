@@ -1,57 +1,15 @@
-You are now connected to database "elder_helper" as user "leighkeating".
- user_id | phone_number | first_name |  surname  | is_elder | postcode |                    avatar_url                    |                       profile_msg                       
----------+--------------+------------+-----------+----------+----------+--------------------------------------------------+---------------------------------------------------------
-       1 | 7890123      | Ella       | Martin    | t        | M7 7GG   | https://example.com/avatars/ellamartin.jpg       | Seeking companionship for walks in the park.
-       2 | 8901234      | Michael    | Lewis     | f        | M8 8HH   | https://example.com/avatars/michaellewis.jpg     | I/'m into DIY projects and sharing tips.
-       3 | 9012345      | Chloe      | White     | t        | M9 9II   | https://example.com/avatars/chloewhite.jpg       | Offering my services for house-sitting.
-       4 | 0123456      | Lucas      | Harris    | f        | M10 0JJ  | https://example.com/avatars/lucasharris.jpg      | Could use some help with household chores.
-       5 | 1234568      | Zoe        | Clark     | t        | M11 1KK  | https://example.com/avatars/zoeclass.jpg         | I organize community clean-up events, join us!
-       6 | 2345679      | Aiden      | Robinson  | f        | M12 2LL  | https://example.com/avatars/aidenrobinson.jpg    | Photographer available for events and portraits.
-       7 | 3456780      | Sophia     | Walker    | t        | M13 3MM  | https://example.com/avatars/sophiawalker.jpg     | Looking for someone to teach me how to use a computer.
-       8 | 4567891      | James      | Allen     | f        | M14 4NN  | https://example.com/avatars/jamesallen.jpg       | Volunteering my time for tutoring high school students.
-       9 | 5678902      | Grace      | Young     | t        | M15 5OO  | https://example.com/avatars/graceyoung.jpg       | In need of transport to weekly doctor appointments.
-      10 | 6789013      | Henry      | King      | f        | M16 6PP  | https://example.com/avatars/henryking.jpg        | Available for pet sitting and care.
-      11 | 7890124      | Mia        | Thompson  | t        | M17 7QQ  | https://example.com/avatars/miathompson.jpg      | Enthusiastic about community gardening projects.
-      12 | 8901235      | Oliver     | Moore     | f        | M18 8RR  | https://example.com/avatars/olivermoore.jpg      | Looking for help with learning to paint.
-      13 | 9012346      | Amelia     | Lee       | t        | M19 9SS  | https://example.com/avatars/amelialee.jpg        | I offer free yoga classes for beginners.
-      14 | 0123457      | Ethan      | Perez     | f        | M20 0TT  | https://example.com/avatars/ethanperez.jpg       | Computer whiz looking to help with tech issues.
-      15 | 1234569      | Abigail    | Davis     | t        | M21 1UU  | https://example.com/avatars/abigaildavis.jpg     | Seeking assistance with grocery shopping.
-      16 | 2345670      | Jackson    | Miller    | f        | M22 2VV  | https://example.com/avatars/jacksonmiller.jpg    | Ready to volunteer for pet rescue services.
-      17 | 3456781      | Madison    | Anderson  | t        | M23 3WW  | https://example.com/avatars/madisonanderson.jpg  | Graphic designer offering free workshops for teens.
-      18 | 4567892      | Logan      | Taylor    | f        | M24 4XX  | https://example.com/avatars/logantaylor.jpg      | Would appreciate help with garden maintenance.
-      19 | 5678903      | Sophie     | Hernandez | t        | M25 5YY  | https://example.com/avatars/sophiehernandez.jpg  | Im looking to learn new crafts, any teachers out there?
-      20 | 6789014      | Benjamin   | Martinez  | f        | M26 6ZZ  | https://example.com/avatars/benjaminmartinez.jpg | Join me for weekend cycling and adventure.
-(20 rows)
-
- job_id |         job_title         |                                    job_desc                                    | posted_date | expiry_date | elder_id | helper_id | status_id | postcode 
---------+---------------------------+--------------------------------------------------------------------------------+-------------+-------------+----------+-----------+-----------+----------
-      1 | Companionship             | Looking for someone to keep me company and chat with me in the evenings.       | 2023-11-06  | 2023-11-20  |        1 |        10 |         2 | M7 7GG
-      2 | Grocery Shopping          | Need help with grocery shopping once a week.                                   | 2023-11-08  | 2023-11-15  |        7 |        12 |         1 | M13 3MM
-      3 | Medication Reminder       | Require assistance in taking my medications at the right times.                | 2023-11-10  | 2023-11-25  |        3 |         6 |         3 | M9 9II
-      4 | Transportation Assistance | Looking for someone to drive me to doctor's appointments and grocery stores.   | 2023-11-12  | 2023-11-26  |        5 |        14 |         2 | M11 1KK
-      5 | Meal Preparation          | Need help with preparing and cooking meals for the week.                       | 2023-11-14  | 2023-11-21  |        5 |         6 |         1 | M11 1KK
-      6 | House Cleaning            | Seeking assistance with general house cleaning and organizing.                 | 2023-11-16  | 2023-11-30  |        7 |         8 |         4 | M13 3MM
-      7 | Outdoor Activities        | Looking for a companion to go for walks and enjoy outdoor activities.          | 2023-11-18  | 2023-11-27  |        7 |         4 |         1 | M13 3MM
-      8 | Pet Care                  | Need assistance in taking care of my pet dog, including feeding and walks.     | 2023-11-20  | 2023-12-05  |       11 |        18 |         2 | M17 7QQ
-      9 | Tech Support              | Require help with using and troubleshooting my computer and smartphone.        | 2023-11-22  | 2023-12-10  |        7 |        14 |         3 | M13 3MM
-     10 | Yard Maintenance          | Looking for someone to mow the lawn and maintain my garden.                    | 2023-11-24  | 2023-12-15  |       11 |        12 |         4 | M17 7QQ
-     11 | Reading Assistance        | Need help with reading books and newspapers due to vision impairment.          | 2023-11-26  | 2023-12-20  |        7 |        16 |         2 | M13 3MM
-     12 | Transportation Assistance | Looking for someone to drive me to doctor's appointments and grocery stores.   | 2023-11-12  | 2023-11-26  |       11 |        20 |         1 | M17 7QQ
-     13 | Art and Crafts            | Seeking a creative companion to engage in arts and crafts activities.          | 2023-11-28  | 2023-12-08  |       13 |         2 |         3 | M19 9SS
-     14 | Tech Support              | Require help with using and troubleshooting my computer and smartphone.        | 2023-11-30  | 2023-12-12  |       15 |         4 |         2 | M21 1UU
-     15 | Exercise Partner          | Looking for a fitness buddy to exercise and stay active together.              | 2023-12-02  | 2023-12-18  |       15 |         6 |         4 | M21 1UU
-     16 | Music Appreciation        | Seeking someone to listen to and discuss music with me.                        | 2023-12-04  | 2023-12-22  |       17 |        16 |         1 | M23 3WW
-     17 | Language Tutoring         | Need help learning a new language or improving language skills.                | 2023-12-06  | 2023-12-25  |       17 |         8 |         3 | M23 3WW
-     18 | Transportation Assistance | Looking for someone to drive me to doctor's appointments and the supermarket.  | 2023-11-12  | 2023-11-26  |       19 |         7 |         2 | M25 5YY
-     19 | Gardening                 | Seeking a gardening enthusiast to help with planting and maintaining a garden. | 2023-12-08  | 2023-12-30  |       19 |         6 |         4 | M25 5YY
-     20 | Movie Buddy               | Looking for a movie companion to watch and discuss films together.             | 2023-12-10  | 2023-12-24  |       20 |        12 |         1 | M26 6ZZ
-(20 rows)
-
- status_id |  status   
------------+-----------
-         1 | requested
-         2 | accepted
-         3 | completed
-         4 | expired
-(4 rows)
+You are now connected to database "elder_helper" as user "stanley".
+ message_id | elder_id | helper_id | status_id | chat_room_id |                     message_body                     
+------------+----------+-----------+-----------+--------------+------------------------------------------------------
+          1 |        4 |         7 |           |            1 | Hello there!
+          2 |        4 |         7 |           |            1 | How are you today?
+          3 |        4 |         7 |           |            1 | I need some assistance with this in the afternoon.
+          4 |        4 |         7 |           |            1 | Sure, I'm here to help!
+          5 |        4 |         7 |           |            1 | Does 3pm sound good?
+          6 |        2 |        11 |           |            2 | Good morning!
+          7 |        2 |        11 |           |            2 | Could you ask a question about my medication?
+          8 |        2 |        11 |           |            2 | Sure, what is it?
+          9 |        2 |        11 |           |            2 | Is it okay to take it with food?
+         10 |        2 |        11 |           |            2 | Yes, the pharmacist recommends to take it with food.
+(10 rows)
 
