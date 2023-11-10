@@ -125,7 +125,7 @@
             }
         },
     "PATCH /api/users/:user_id": {
-        "description": "amends user with specific user_id and serves updated job",
+        "description": "amends user with specific user_id and serves updated user",
         "queries": ["phone_number", "first_name", "surname", "postode", "avatar_url", "profile_msg"],
         "exampleResponse": {
             "user":   [{
