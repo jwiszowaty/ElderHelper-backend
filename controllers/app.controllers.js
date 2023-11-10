@@ -13,6 +13,7 @@ const {
   fetchJobsByElder,
   fetchJobsByPostCode,
   fetchAllUsers,
+  fetchJobsUsers,
 } = require("../models/app.models.js");
 
 const fs = require("fs/promises");
@@ -186,6 +187,16 @@ exports.getChatMessages = (req, res, next) => {
     .then((response) => {
       console.log("IN CONTROLLERS \n", response);
       res.statis(200).send(response);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+exports.getJobsUsers = (req, res, next) => {
+  fetchJobsUsers()
+    .then((jobsUsers) => {
+      res.status(200).send(jobsUsers);
     })
     .catch((err) => {
       next(err);

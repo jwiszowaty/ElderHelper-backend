@@ -16,6 +16,7 @@ const {
   getJobsByElder,
   getAllUsers,
   getChatMessages,
+  getJobsUsers,
 } = require("./controllers/app.controllers.js");
 
 const {
@@ -90,6 +91,8 @@ app.use(express.json());
 app.get("/api", getEndpointsInfo);
 
 app.get("/api/jobs", getJobs);
+
+app.get("/api/jobs/users", getJobsUsers);
 
 app.get("/api/jobs/:job_id", getSingleJob);
 

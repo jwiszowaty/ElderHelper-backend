@@ -644,3 +644,35 @@ describe("GET /api/users", () => {
 //       });
 //   });
 // });
+
+describe("GET /api/jobs/users", () => {
+  it("returns status code 200 and array of job objects with user information also", () => {
+    return request(app)
+      .get("/api/jobs/users")
+      .expect(200)
+      .then((response) => {
+        expect(response.body.length).toBe(6);
+        response.body.forEach((job) => {
+          const requiredKeys = [
+            "job_id",
+            "job_title",
+            "job_desc",
+            "posted_date",
+            "expiry_date",
+            "elder_id",
+            "helper_id",
+            "status_id",
+            "postcode",
+            "user_id",
+            "phone_number",
+            "first_name",
+            "surname",
+            "is_elder",
+            "avatar_url",
+            "profile_msg"
+          ];
+          expect(Object.getOwnPropertyNames(job)).toEqual(requiredKeys);
+        });
+      });
+  });
+});
