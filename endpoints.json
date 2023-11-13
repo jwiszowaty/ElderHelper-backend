@@ -138,5 +138,27 @@
                 "profile_msg": "Amended profile message"
               }]
             }
+      },
+      "GET /api/jobs/users": {
+        "description": "serves an array of all jobs joined by the elder_id with their user information",
+        "queries": [],
+        "exampleResponse": {
+          "jobsUsers": [{
+              "job_id": 1,
+              "job_title": "Companionship",
+              "job_desc": "Looking for someone to keep me company and chat with me in the evenings.",
+              "posted_date": "2023-11-06T00:00:00.000Z",
+              "expiry_date": "2023-11-20T00:00:00.000Z",
+              "elder_id": 1,
+              "helper_id": 6,
+              "status_id": 2,
+              "postcode": "M6 6FF",
+              "first_name": "John",
+              "surname": "Doe",
+              "is_elder": "true",
+              "avatar_url": "https://example.com/avatars/newexample.jpg",
+              "profile_msg": "profile message"
+              }]
+        }
       }
   }
