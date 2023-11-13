@@ -15,6 +15,7 @@ const {
   fetchAllUsers,
   fetchJobsUsers,
   fetchChatMessages,
+  sendChatMessage,
 } = require("../models/app.models.js");
 
 const fs = require("fs/promises");
@@ -183,6 +184,16 @@ exports.getAllUsers = (req, res, next) => {
     });
 };
 
+exports.getJobsUsers = (req, res, next) => {
+  fetchJobsUsers()
+    .then((jobsUsers) => {
+      res.status(200).send(jobsUsers);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
 exports.getChatMessages = (req, res, next) => {
   const { user_id } = req.params;
   const { chatroom } = req.query;
@@ -196,12 +207,12 @@ exports.getChatMessages = (req, res, next) => {
     });
 };
 
-exports.getJobsUsers = (req, res, next) => {
-  fetchJobsUsers()
-    .then((jobsUsers) => {
-      res.status(200).send(jobsUsers);
-    })
-    .catch((err) => {
-      next(err);
-    });
+exports.postMessage = (req, res, next) => {
+  const params = req.params;
+  const query = req.query;
+  console.log(chatMessage);
+  sendChatMessage(user_id, chatroom).then((response) => {
+    console.log(response);
+    res.status(201).send(response);
+  });
 };

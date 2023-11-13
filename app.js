@@ -17,6 +17,7 @@ const {
   getAllUsers,
   getChatMessages,
   getJobsUsers,
+  postMessage,
 } = require("./controllers/app.controllers.js");
 
 const {
@@ -31,9 +32,8 @@ const {
 const cors = require("cors");
 const dotenv = require("dotenv");
 const socketio = require("socket.io");
+
 const bodyParser = require("body-parser");
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
 
 const server = require("http").Server(app);
 const io = socketio(server);
@@ -44,22 +44,30 @@ app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(passport.initialize());
 
 // const messagesRouter = require('./routes/messages');
 // app.use('/messages', messagesRouter);
 
 // Socket.IO
+app.get("/chatting", (req, res) => {
+  console.log("socket oon ");
+  res.sendFile(__dirname + "/index.html");
+});
+
 io.on("connection", (socket) => {
-  console.log(`Socket ${socket.id} connected`);
-
-  socket.on("sendMessage", (message) => {
-    io.emit("message", message);
+  console.log("a user connected");
+  socket.on("chat message", (data) => {
+    console.log(`message from ${data.username}: ${data.message}`);
+    io.emit("chat message", data);
   });
-
   socket.on("disconnect", () => {
-    console.log(`Socket ${socket.id} disconnected`);
+    console.log("user disconnected");
   });
+});
+
+io.emit("some event", {
+  someProperty: "some value",
+  otherProperty: "other value",
 });
 
 //////////////////////////////////////////////////////////////////////////
@@ -100,6 +108,8 @@ app.get("/api/users/:phone_number", getExistingUser);
 app.get("/api/users", getAllUsers);
 
 app.get("/api/messages/:user_id", getChatMessages);
+
+app.post("/api/messages/:user_id", postMessage);
 
 //error handling
 

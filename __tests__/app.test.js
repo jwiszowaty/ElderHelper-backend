@@ -579,6 +579,7 @@ describe("GET /api/users/:phone_number to check if a user exists for logging in"
       .expect(200)
       .then(({ body }) => {
         expect(body.user).toMatchObject({
+          user_id: 2,
           phone_number: "1234567",
           first_name: "John",
           surname: "Doe",
@@ -661,7 +662,7 @@ describe("GET /api/jobs/users", () => {
             "surname",
             "is_elder",
             "avatar_url",
-            "profile_msg"
+            "profile_msg",
           ];
           expect(Object.getOwnPropertyNames(job)).toEqual(requiredKeys);
         });
@@ -681,3 +682,15 @@ describe("GET /api/messages/:elder_id?chatroom=", () => {
       });
   });
 });
+
+// describe("POST /api/messages", () => {
+//   it("returns 201 status code and sends back the user the message", () => {
+//     return request(app)
+//       .post("/api/messages")
+//       .expect(201)
+//       .then(({ body }) => {
+//         console.log("in app test", body);
+//         expect(typeof body).toBe("object");
+//       });
+//   });
+// });

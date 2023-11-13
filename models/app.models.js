@@ -141,7 +141,7 @@ exports.fetchExistingUser = (phoneNumber) => {
   if (/^\d+$/.test(phoneNumber)) {
     return db
       .query(
-        `SELECT phone_number, first_name, surname, is_elder, postcode, avatar_url, profile_msg FROM users WHERE phone_number = $1;`,
+        `SELECT user_id, phone_number, first_name, surname, is_elder, postcode, avatar_url, profile_msg FROM users WHERE phone_number = $1;`,
         [phoneNumber]
       )
       .then(({ rows }) => {
@@ -226,9 +226,21 @@ exports.fetchAllUsers = () => {
   });
 };
 
-exports.fetchChatMessages = (user_id, chatroom_id) => {
-  // console.log(user_id, "<< user id\n", chatroom_id, "<<chatroom id");
+exports.fetchJobsUsers = () => {
+  return db
+    .query(
+      `SELECT * 
+    FROM jobs
+    JOIN users
+    ON jobs.elder_id = users.user_id;`
+    )
+    .then(({ rows }) => {
+      console.log(rows);
+      return rows;
+    });
+};
 
+exports.fetchChatMessages = (user_id, chatroom_id) => {
   const isElderQuery = `
   SELECT first_name, is_elder FROM users
   WHERE user_id = $1;
@@ -268,14 +280,8 @@ exports.fetchChatMessages = (user_id, chatroom_id) => {
     });
 };
 
-exports.fetchJobsUsers = () => {
-  return db.query(
-    `SELECT * 
-    FROM jobs
-    JOIN users
-    ON jobs.elder_id = users.user_id;`)
-    .then(({ rows }) => {
-      console.log(rows)
-      return rows;
-    })
-}
+// exports.sendChatMessage = (user_id, chatroom_id) => {
+//   const addMessageQuery = `
+
+//   `;
+// };
