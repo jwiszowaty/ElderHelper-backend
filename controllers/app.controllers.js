@@ -208,11 +208,13 @@ exports.getChatMessages = (req, res, next) => {
 };
 
 exports.postMessage = (req, res, next) => {
-  const params = req.params;
-  const query = req.query;
-  console.log(chatMessage);
-  sendChatMessage(user_id, chatroom).then((response) => {
-    console.log(response);
-    res.status(201).send(response);
-  });
+  const chatMessage = req.body;
+  sendChatMessage(chatMessage)
+    .then((response) => {
+      res.status(201).send(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
 };
