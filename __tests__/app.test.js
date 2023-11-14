@@ -683,14 +683,20 @@ describe("GET /api/messages/:elder_id?chatroom=", () => {
   });
 });
 
-// describe("POST /api/messages", () => {
-//   it("returns 201 status code and sends back the user the message", () => {
-//     return request(app)
-//       .post("/api/messages")
-//       .expect(201)
-//       .then(({ body }) => {
-//         console.log("in app test", body);
-//         expect(typeof body).toBe("object");
-//       });
-//   });
-// });
+describe("POST /api/messages", () => {
+  it("returns 201 status code and sends back the user the message", () => {
+    const chatMessage = {
+      elder_id: 4,
+      helper_id: 3,
+      chat_room_id: 1,
+      message_body: "This is a test message hullo?",
+    };
+    return request(app)
+      .post("/api/messages")
+      .send(chatMessage)
+      .expect(201)
+      .then(({ body }) => {
+        expect(typeof body).toBe("object");
+      });
+  });
+});

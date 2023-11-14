@@ -235,7 +235,6 @@ exports.fetchJobsUsers = () => {
     ON jobs.elder_id = users.user_id;`
     )
     .then(({ rows }) => {
-      console.log(rows);
       return rows;
     });
 };
@@ -280,8 +279,20 @@ exports.fetchChatMessages = (user_id, chatroom_id) => {
     });
 };
 
-// exports.sendChatMessage = (user_id, chatroom_id) => {
-//   const addMessageQuery = `
-
-//   `;
-// };
+exports.sendChatMessage = (chatMessage) => {
+  const addMessageQuery = `
+  INSERT INTO messages (elder_id, helper_id, chat_room_id, message_body )
+  VALUES ($1, $2, $3, $4)
+  RETURNING *
+  `;
+  return db
+    .query(addMessageQuery, [
+      chatMessage.elder_id,
+      chatMessage.helper_id,
+      chatMessage.chat_room_id,
+      chatMessage.message_body,
+    ])
+    .then((result) => {
+      return result;
+    });
+};

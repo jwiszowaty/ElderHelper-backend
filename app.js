@@ -27,7 +27,6 @@ const {
 } = require("./controllers/errors.controllers.js");
 
 //////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
 
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -36,7 +35,11 @@ const socketio = require("socket.io");
 const bodyParser = require("body-parser");
 
 const server = require("http").Server(app);
-const io = socketio(server);
+const io = socketio(server, {
+  cors: {
+    origin: "https://elderhelper.onrender.com",
+  },
+});
 
 dotenv.config();
 
@@ -45,20 +48,17 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// const messagesRouter = require('./routes/messages');
-// app.use('/messages', messagesRouter);
-
 // Socket.IO
 app.get("/chatting", (req, res) => {
-  console.log("socket oon ");
-  res.sendFile(__dirname + "/index.html");
+  console.log("socket on ");
+  res.status(200);
 });
 
 io.on("connection", (socket) => {
   console.log("a user connected");
-  socket.on("chat message", (data) => {
+  socket.on("message", (data) => {
     console.log(`message from ${data.username}: ${data.message}`);
-    io.emit("chat message", data);
+    io.emit("message", data);
   });
   socket.on("disconnect", () => {
     console.log("user disconnected");
@@ -70,7 +70,10 @@ io.emit("some event", {
   otherProperty: "other value",
 });
 
-//////////////////////////////////////////////////////////////////////////
+io.on("connect_error", (err) => {
+  console.error("Socket.IO connection error:", err.message);
+});
+
 //////////////////////////////////////////////////////////////////////////
 
 app.use(express.json());
@@ -109,7 +112,7 @@ app.get("/api/users", getAllUsers);
 
 app.get("/api/messages/:user_id", getChatMessages);
 
-app.post("/api/messages/:user_id", postMessage);
+app.post("/api/messages", postMessage);
 
 //error handling
 
