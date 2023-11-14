@@ -69,14 +69,14 @@
         "posted_date": "2023-11-06T00:00:00.000Z",
         "expiry_date": "2023-11-20T00:00:00.000Z",
         "elder_id": 1,
-        "helper_id": "",
+        "helper_id": 2,
         "status_id": 1,
         "postcode": "M12 3AB"}]
       }
     },
     "PATCH /api/jobs/:job_id": {
       "description": "amends job with specific job_id and serves updated job",
-      "queries": ["job_id", "job_title", "job_desc", "expiry_date"],
+      "queries": ["job_id", "job_title", "job_desc", "expiry_date", "helper_id", "status_id"],
       "exampleResponse": {
         "job": [{"job_id": 7,
         "job_title": "Amended job",
@@ -84,7 +84,7 @@
         "posted_date": "2023-11-06T00:00:00.000Z",
         "expiry_date": "2023-11-24T00:00:00.000Z",
         "elder_id": 1,
-        "helper_id": "",
+        "helper_id": 2,
         "status_id": 1,
         "postcode": "M12 3AB"}]
       }
