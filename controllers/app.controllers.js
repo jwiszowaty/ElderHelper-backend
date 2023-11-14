@@ -9,7 +9,6 @@ const {
   fetchExistingUser,
   fetchAcceptedHelperJobs,
   jobToDelete,
-  updateJobStatus,
   fetchJobsByElder,
   fetchJobsByPostCode,
   fetchAllUsers,
@@ -155,19 +154,6 @@ exports.getAcceptedHelperJobs = (req, res, next) => {
   fetchAcceptedHelperJobs(user_id, status)
     .then((acceptedJobs) => {
       res.status(200).send({ acceptedJobs: acceptedJobs });
-    })
-    .catch((err) => {
-      next(err);
-    });
-};
-
-exports.changeJobStatus = (req, res, next) => {
-  const { job_id } = req.params;
-  const { status_id } = req.body;
-
-  updateJobStatus(job_id, status_id)
-    .then((completedJob) => {
-      res.status(200).send({ completedJob: completedJob });
     })
     .catch((err) => {
       next(err);

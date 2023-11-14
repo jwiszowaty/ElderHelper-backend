@@ -49,8 +49,8 @@ exports.createJob = (job) => {
 exports.updateJob = (toUpdate, job_id) => {
   return db
     .query(
-      `UPDATE jobs SET job_title = $1, job_desc = $2, expiry_date = $3 WHERE job_id = $4 RETURNING *;`,
-      [toUpdate.job_title, toUpdate.job_desc, toUpdate.expiry_date, job_id]
+      `UPDATE jobs SET job_title = $1, job_desc = $2, expiry_date = $3, status_id = $4, helper_id = $5 WHERE job_id = $6 RETURNING *;`,
+      [toUpdate.job_title, toUpdate.job_desc, toUpdate.expiry_date, toUpdate.status_id, toUpdate.helper_id, job_id]
     )
     .then(({ rows }) => {
       return rows[0];
@@ -192,31 +192,6 @@ exports.fetchAcceptedHelperJobs = (userId, status) => {
       status: 404,
       message: "Path not found!",
     });
-  }
-};
-
-exports.updateJobStatus = (jobId, statusId) => {
-  if (statusId > 4 || statusId === undefined) {
-    return Promise.reject({ status: 400, message: "bad request" });
-  } else if (/^[0-9]+$/.test(jobId)) {
-    return db
-      .query(
-        `UPDATE jobs 
-                  SET status_id = 3
-                  WHERE job_id = $1 RETURNING*`,
-        [jobId]
-      )
-      .then(({ rows }) => {
-        if (rows.length === 0) {
-          return Promise.reject({
-            status: 404,
-            message: "job does not exist!",
-          });
-        }
-        return rows[0];
-      });
-  } else {
-    return Promise.reject({ status: 404, message: "job not found!" });
   }
 };
 
