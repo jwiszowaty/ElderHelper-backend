@@ -78,8 +78,6 @@ app.post("/api/jobs", postJob);
 
 app.patch("/api/jobs/:job_id", patchJob);
 
-app.patch("/api/:job_id", changeJobStatus);
-
 app.delete("/api/jobs/:job_id", deleteJob);
 
 //user endpoints
