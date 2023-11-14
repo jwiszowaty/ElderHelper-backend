@@ -73,7 +73,6 @@ exports.postJob = (req, res, next) => {
 exports.patchJob = (req, res, next) => {
   const { job_id } = req.params;
   const toUpdate = req.body;
-
   fetchSingleJob(job_id)
     .then(() => {
       updateJob(toUpdate, job_id).then((job) => {
