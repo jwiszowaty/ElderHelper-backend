@@ -1,5 +1,6 @@
 \c elder_helper;
 
-SELECT * FROM users;
-SELECT * FROM jobs;
-SELECT * FROM status;
+-- SELECT * FROM users;
+-- SELECT * FROM jobs;
+-- SELECT * FROM status;
+SELECT * FROM messages;

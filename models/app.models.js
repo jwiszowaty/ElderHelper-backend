@@ -47,17 +47,10 @@ exports.createJob = (job) => {
 };
 
 exports.updateJob = (toUpdate, job_id) => {
-  // if (new Date() < new Date(toUpdate.expiry_date)) {
-  //     console.log('in error')
-  //     return Promise.reject({
-  //         status: 400,
-  //         message: 'bad request'
-  //     })
-  // }
   return db
     .query(
-      `UPDATE jobs SET job_title = $1, job_desc = $2, expiry_date = $3 WHERE job_id = $4 RETURNING *;`,
-      [toUpdate.job_title, toUpdate.job_desc, toUpdate.expiry_date, job_id]
+      `UPDATE jobs SET job_title = $1, job_desc = $2, expiry_date = $3, status_id = $4, helper_id = $5 WHERE job_id = $6 RETURNING *;`,
+      [toUpdate.job_title, toUpdate.job_desc, toUpdate.expiry_date, toUpdate.status_id, toUpdate.helper_id, job_id]
     )
     .then(({ rows }) => {
       return rows[0];
@@ -128,8 +121,8 @@ exports.updateUser = (edit, userId) => {
   return db
     .query(
       `UPDATE users
-         SET phone_number = $1, first_name = $2, surname= $3, is_elder = $4, postcode = $5, avatar_url = $6
-         WHERE user_id = $7
+         SET phone_number = $1, first_name = $2, surname= $3, is_elder = $4, postcode = $5, avatar_url = $6, profile_msg = $7
+         WHERE user_id = $8
          RETURNING*;`,
       editArr
     )
@@ -202,27 +195,79 @@ exports.fetchAcceptedHelperJobs = (userId, status) => {
   }
 };
 
-exports.updateJobStatus = (jobId, statusId) => {
-  if (statusId > 4 || statusId === undefined) {
-    return Promise.reject({ status: 400, message: "bad request" });
-  } else if (/^[0-9]+$/.test(jobId)) {
-    return db
-      .query(
-        `UPDATE jobs 
-                  SET status_id = 3
-                  WHERE job_id = $1 RETURNING*`,
-        [jobId]
-      )
-      .then(({ rows }) => {
-        if (rows.length === 0) {
-          return Promise.reject({
-            status: 404,
-            message: "job does not exist!",
+exports.fetchAllUsers = () => {
+  return db.query(`SELECT * FROM users;`).then(({ rows }) => {
+    return rows;
+  });
+};
+
+exports.fetchJobsUsers = () => {
+  return db
+    .query(
+      `SELECT * 
+    FROM jobs
+    JOIN users
+    ON jobs.elder_id = users.user_id;`
+    )
+    .then(({ rows }) => {
+      return rows;
+    });
+};
+
+exports.fetchChatMessages = (user_id, chatroom_id) => {
+  const isElderQuery = `
+  SELECT first_name, is_elder FROM users
+  WHERE user_id = $1;
+  `;
+
+  const fetchMessageQueryElder = `
+  SELECT * FROM messages
+  WHERE elder_id = $1 AND chat_room_id = $2
+  ORDER BY message_id ASC;
+  `;
+
+  const fetchMessageQueryHelper = `
+  SELECT * FROM messages
+  WHERE helper_id = $1 AND chat_room_id = $2
+  ORDER BY message_id ASC;
+  `;
+
+  return db
+    .query(isElderQuery, [user_id])
+    .then(({ rows }) => {
+      return rows[0];
+    })
+    .then((result) => {
+      if (result.is_elder === true) {
+        return db
+          .query(fetchMessageQueryElder, [user_id, chatroom_id])
+          .then(({ rows }) => {
+            return rows;
           });
-        }
-        return rows[0];
-      });
-  } else {
-    return Promise.reject({ status: 404, message: "job not found!" });
-  }
+      } else {
+        return db
+          .query(fetchMessageQueryHelper, [user_id, chatroom_id])
+          .then(({ rows }) => {
+            return rows;
+          });
+      }
+    });
+};
+
+exports.sendChatMessage = (chatMessage) => {
+  const addMessageQuery = `
+  INSERT INTO messages (elder_id, helper_id, chat_room_id, message_body )
+  VALUES ($1, $2, $3, $4)
+  RETURNING *
+  `;
+  return db
+    .query(addMessageQuery, [
+      chatMessage.elder_id,
+      chatMessage.helper_id,
+      chatMessage.chat_room_id,
+      chatMessage.message_body,
+    ])
+    .then((result) => {
+      return result;
+    });
 };

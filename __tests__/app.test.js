@@ -1,8 +1,9 @@
-const app = require("../app.js");
+const { app } = require("../app.js");
 const request = require("supertest");
 const db = require("../db/connection.js");
 const seed = require("../db/seeds/seed.js");
 const data = require("../db/data/test-data/index.js");
+require("jest-sorted");
 
 beforeEach(() => {
   return seed(data);
@@ -96,7 +97,7 @@ describe("POST /api/jobs", () => {
         expect(Object.getOwnPropertyNames(body.job)).toEqual(requiredKeys);
       });
   });
-  it("should auto assign helper_id = 1 (dummy user) and status_id 1 (requested) when posting new request", ()=>{
+  it("should auto assign helper_id = 1 (dummy user) and status_id 1 (requested) when posting new request", () => {
     const newJob = {
       job_title: "Amazing new job",
       job_desc: "Do it for me",
@@ -111,7 +112,7 @@ describe("POST /api/jobs", () => {
       .then(({ body }) => {
         expect(body.job.helper_id).toBe(1);
         expect(body.job.status_id).toBe(1);
-      })
+      });
   });
   it("should return 400 error when passed object with invalid elder_id", () => {
     const newJob = {
@@ -170,6 +171,8 @@ describe("PATCH /api/jobs/:job_id", () => {
       job_title: "Amazing new job",
       job_desc: "Do it for me",
       expiry_date: "2023-11-12",
+      helper_id: 1,
+      status_id: 1
     };
     return request(app)
       .patch("/api/jobs/1")
@@ -197,6 +200,8 @@ describe("PATCH /api/jobs/:job_id", () => {
       job_title: "Amazing new job",
       job_desc: "Do it for me",
       expiry_date: "2023-11-12",
+      helper_id: 1,
+      status_id: 1
     };
     return request(app)
       .patch("/api/jobs/999")
@@ -211,6 +216,8 @@ describe("PATCH /api/jobs/:job_id", () => {
       job_title: "Amazing new job",
       job_desc: "Do it for me",
       expiry_date: "2023-11-12",
+      helper_id: 1,
+      status_id: 1
     };
     return request(app)
       .patch("/api/jobs/abc")
@@ -286,7 +293,7 @@ describe("GET jobs by elder id", () => {
       });
   });
 
-  test("404: returns error when comment_id does not exist", () => {
+  test("404: returns error when job_id does not exist", () => {
     return request(app)
       .delete(`/api/jobs/99999`)
       .expect(404)
@@ -383,6 +390,7 @@ describe("PATCH /api/users/:user_id", () => {
       is_elder: false,
       postcode: "M2 2CT",
       avatar_url: "https://example.com/avatars/janesmith.jpg",
+      profile_msg: "Hello, my name is Jane",
     };
     return request(app)
       .patch("/api/users/2")
@@ -396,6 +404,7 @@ describe("PATCH /api/users/:user_id", () => {
           is_elder: false,
           postcode: "M2 2CT",
           avatar_url: "https://example.com/avatars/janesmith.jpg",
+          profile_msg: "Hello, my name is Jane",
         });
       });
   });
@@ -417,9 +426,10 @@ describe("PATCH /api/users/:user_id", () => {
       is_elder: false,
       postcode: "M2 2CT",
       avatar_url: "https://example.com/avatars/janesmith.jpg",
+      profile_msg: "Hello, my name is Jane",
     };
     return request(app)
-      .patch("/api/users/22")
+      .patch("/api/users/220")
       .send(patchUser)
       .expect(404)
       .then(({ body }) => {
@@ -507,66 +517,66 @@ describe("GET /api/users/:user_id/:status should get all of a helper users accep
   });
 });
 
-describe("PATCH /api/:job_id updates status when elder or helper changes it to completed", () => {
-  test("PATCH returns 200 and updated job object when helper or elder changes status to completed", () => {
-    const patchStatus = { status_id: 3 };
-    return request(app)
-      .patch("/api/1")
-      .send(patchStatus)
-      .expect(200)
-      .then(({ body }) => {
-        expect(body.completedJob).toMatchObject({
-          job_title: "Companionship",
-          job_desc:
-            "Looking for someone to keep me company and chat with me in the evenings.",
-          elder_id: 3,
-          helper_id: 6,
-          status_id: 3,
-        });
-      });
-  });
-  test("PATCH returns 404 and an error message for an invalid job ID", () => {
-    const patchStatus = { status_id: 3 };
-    return request(app)
-      .patch("/api/invalid-job-id")
-      .send(patchStatus)
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.message).toBe("job not found!");
-      });
-  });
-  test("PATCH returns 404 and an error message for a valid but non-existent job Id", () => {
-    const patchStatus = { status_id: 3 };
-    return request(app)
-      .patch("/api/9999")
-      .send(patchStatus)
-      .expect(404)
-      .then(({ body }) => {
-        expect(body.message).toBe("job does not exist!");
-      });
-  });
+// describe("PATCH /api/:job_id updates status when elder or helper changes it to completed", () => {
+//   test("PATCH returns 200 and updated job object when helper or elder changes status to completed", () => {
+//     const patchStatus = { status_id: 3 };
+//     return request(app)
+//       .patch("/api/1")
+//       .send(patchStatus)
+//       .expect(200)
+//       .then(({ body }) => {
+//         expect(body.completedJob).toMatchObject({
+//           job_title: "Companionship",
+//           job_desc:
+//             "Looking for someone to keep me company and chat with me in the evenings.",
+//           elder_id: 3,
+//           helper_id: 6,
+//           status_id: 3,
+//         });
+//       });
+//   });
+//   test("PATCH returns 404 and an error message for an invalid job ID", () => {
+//     const patchStatus = { status_id: 3 };
+//     return request(app)
+//       .patch("/api/invalid-job-id")
+//       .send(patchStatus)
+//       .expect(404)
+//       .then(({ body }) => {
+//         expect(body.message).toBe("job not found!");
+//       });
+//   });
+//   test("PATCH returns 404 and an error message for a valid but non-existent job Id", () => {
+//     const patchStatus = { status_id: 3 };
+//     return request(app)
+//       .patch("/api/9999")
+//       .send(patchStatus)
+//       .expect(404)
+//       .then(({ body }) => {
+//         expect(body.message).toBe("job does not exist!");
+//       });
+//   });
 
-  test("PATCH returns 400 and an error message for a body missing the required fields", () => {
-    const patchStatus = {};
-    return request(app)
-      .patch("/api/1")
-      .send(patchStatus)
-      .expect(400)
-      .then(({ body }) => {
-        expect(body.message).toBe("bad request");
-      });
-  });
-  test("PATCH returns 400 and an error message for a non-existent status_id", () => {
-    const patchStatus = { status_id: 9999 };
-    return request(app)
-      .patch("/api/1")
-      .send(patchStatus)
-      .expect(400)
-      .then(({ body }) => {
-        expect(body.message).toBe("bad request");
-      });
-  });
-});
+//   test("PATCH returns 400 and an error message for a body missing the required fields", () => {
+//     const patchStatus = {};
+//     return request(app)
+//       .patch("/api/1")
+//       .send(patchStatus)
+//       .expect(400)
+//       .then(({ body }) => {
+//         expect(body.message).toBe("bad request");
+//       });
+//   });
+//   test("PATCH returns 400 and an error message for a non-existent status_id", () => {
+//     const patchStatus = { status_id: 9999 };
+//     return request(app)
+//       .patch("/api/1")
+//       .send(patchStatus)
+//       .expect(400)
+//       .then(({ body }) => {
+//         expect(body.message).toBe("bad request");
+//       });
+//   });
+// });
 
 describe("GET /api/users/:phone_number to check if a user exists for logging in", () => {
   test("GET: will return a 200 and a user object if the phone number exists in the db", () => {
@@ -575,6 +585,7 @@ describe("GET /api/users/:phone_number to check if a user exists for logging in"
       .expect(200)
       .then(({ body }) => {
         expect(body.user).toMatchObject({
+          user_id: 2,
           phone_number: "1234567",
           first_name: "John",
           surname: "Doe",
@@ -618,6 +629,80 @@ describe("GET /api/jobs?postcode=", () => {
       .expect(200)
       .then(({ body }) => {
         expect(body.length).toBe(0);
+      });
+  });
+});
+
+describe("GET /api/users", () => {
+  it("returns all users", () => {
+    return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then(({ body }) => {
+        expect(typeof body).toBe("object");
+      });
+  });
+});
+
+describe("GET /api/jobs/users", () => {
+  it("returns status code 200 and array of job objects with user information also", () => {
+    return request(app)
+      .get("/api/jobs/users")
+      .expect(200)
+      .then((response) => {
+        expect(response.body.length).toBe(6);
+        response.body.forEach((job) => {
+          const requiredKeys = [
+            "job_id",
+            "job_title",
+            "job_desc",
+            "posted_date",
+            "expiry_date",
+            "elder_id",
+            "helper_id",
+            "status_id",
+            "postcode",
+            "user_id",
+            "phone_number",
+            "first_name",
+            "surname",
+            "is_elder",
+            "avatar_url",
+            "profile_msg",
+          ];
+          expect(Object.getOwnPropertyNames(job)).toEqual(requiredKeys);
+        });
+      });
+  });
+});
+
+describe("GET /api/messages/:elder_id?chatroom=", () => {
+  it("returns a filtered list of chats sorted by chat_id from lowest to highest", () => {
+    return request(app)
+      .get("/api/messages/4?chatroom=1")
+      .expect(200)
+      .then(({ body }) => {
+        expect(typeof body).toBe("object");
+        expect(body).toHaveLength(5);
+        expect(body).toBeSorted({ key: body.message_id });
+      });
+  });
+});
+
+describe("POST /api/messages", () => {
+  it("returns 201 status code and sends back the user the message", () => {
+    const chatMessage = {
+      elder_id: 4,
+      helper_id: 3,
+      chat_room_id: 1,
+      message_body: "This is a test message hullo?",
+    };
+    return request(app)
+      .post("/api/messages")
+      .send(chatMessage)
+      .expect(201)
+      .then(({ body }) => {
+        expect(typeof body).toBe("object");
       });
   });
 });

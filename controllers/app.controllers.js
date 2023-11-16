@@ -9,37 +9,46 @@ const {
   fetchExistingUser,
   fetchAcceptedHelperJobs,
   jobToDelete,
-  updateJobStatus,
-  fetchJobsByElder, 
-  fetchJobsByPostCode
-
+  fetchJobsByElder,
+  fetchJobsByPostCode,
+  fetchAllUsers,
+  fetchJobsUsers,
+  fetchChatMessages,
+  sendChatMessage,
 } = require("../models/app.models.js");
 
-const fs = require('fs/promises')
+const fs = require("fs/promises");
 
 exports.getEndpointsInfo = (req, res, next) => {
   fs.readFile(`${__dirname}/../endpoints.json`)
-  .then((result) =>{
-    res.status(200).send({endpoints: JSON.parse(result)})
-  })
-  .catch((err) => {next(err)})
-}
+    .then((result) => {
+      res.status(200).send({ endpoints: JSON.parse(result) });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
 
 exports.getJobs = (req, res, next) => {
-    const {postcode} = req.query
-    if (postcode) {
-      fetchJobsByPostCode(postcode)
+  const { postcode } = req.query;
+  if (postcode) {
+    fetchJobsByPostCode(postcode)
       .then((jobsByPostcode) => {
-        res.status(200).send(jobsByPostcode)
+        res.status(200).send(jobsByPostcode);
       })
-      .catch((err) => {next(err)})
-    } else {
-      fetchJobs().then((jobs) =>{
-          res.status(200).send(jobs)
+      .catch((err) => {
+        next(err);
+      });
+  } else {
+    fetchJobs()
+      .then((jobs) => {
+        res.status(200).send(jobs);
       })
-      .catch((err) => {next(err)})
-    }
+      .catch((err) => {
+        next(err);
+      });
   }
+};
 
 exports.getSingleJob = (req, res, next) => {
   const { job_id } = req.params;
@@ -66,7 +75,6 @@ exports.postJob = (req, res, next) => {
 exports.patchJob = (req, res, next) => {
   const { job_id } = req.params;
   const toUpdate = req.body;
-
   fetchSingleJob(job_id)
     .then(() => {
       updateJob(toUpdate, job_id).then((job) => {
@@ -81,10 +89,7 @@ exports.patchJob = (req, res, next) => {
 exports.deleteJob = (req, res, next) => {
   const { job_id } = req.params;
   fetchSingleJob(job_id)
-
-
-  .then(() => {
-
+    .then(() => {
       jobToDelete(job_id);
     })
     .then(() => {
@@ -95,17 +100,16 @@ exports.deleteJob = (req, res, next) => {
     });
 };
 
-
-
 exports.getJobsByElder = (req, res, next) => {
-  const {elder_id} = req.params;
+  const { elder_id } = req.params;
   fetchJobsByElder(elder_id)
-  .then((jobs) => {
-    res.status(200).send(jobs)
-  })
-  .catch((err) => {next (err)})
-}
-
+    .then((jobs) => {
+      res.status(200).send(jobs);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
 
 exports.postNewUser = (req, res, next) => {
   const newUser = req.body;
@@ -155,15 +159,47 @@ exports.getAcceptedHelperJobs = (req, res, next) => {
     });
 };
 
-exports.changeJobStatus = (req, res, next) => {
-  const { job_id } = req.params;
-  const { status_id } = req.body;
-
-  updateJobStatus(job_id, status_id)
-    .then((completedJob) => {
-      res.status(200).send({ completedJob: completedJob });
+exports.getAllUsers = (req, res, next) => {
+  fetchAllUsers()
+    .then((response) => {
+      res.status(200).send(response);
     })
     .catch((err) => {
+      next(err);
+    });
+};
+
+exports.getJobsUsers = (req, res, next) => {
+  fetchJobsUsers()
+    .then((jobsUsers) => {
+      res.status(200).send(jobsUsers);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+exports.getChatMessages = (req, res, next) => {
+  const { user_id } = req.params;
+  const { chatroom } = req.query;
+
+  fetchChatMessages(user_id, chatroom)
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+exports.postMessage = (req, res, next) => {
+  const chatMessage = req.body;
+  sendChatMessage(chatMessage)
+    .then((response) => {
+      res.status(201).send(response);
+    })
+    .catch((err) => {
+      console.log(err);
       next(err);
     });
 };
