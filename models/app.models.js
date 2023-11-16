@@ -29,10 +29,22 @@ exports.fetchSingleJob = (job_id) => {
 };
 
 exports.createJob = (job) => {
-    return db.query(`INSERT INTO jobs (job_title, job_desc, posted_date, expiry_date, elder_id, helper_id, postcode) VALUES ($1, $2, $3, $4, $5, '1', $6) RETURNING *;`, [job.job_title, job.job_desc, job.posted_date, job.expiry_date, job.elder_id, job.postcode]).then(({rows}) => {
-        return rows[0]
-    })
-}
+  return db
+    .query(
+      `INSERT INTO jobs (job_title, job_desc, posted_date, expiry_date, elder_id, helper_id, postcode) VALUES ($1, $2, $3, $4, $5, '1', $6) RETURNING *;`,
+      [
+        job.job_title,
+        job.job_desc,
+        job.posted_date,
+        job.expiry_date,
+        job.elder_id,
+        job.postcode,
+      ]
+    )
+    .then(({ rows }) => {
+      return rows[0];
+    });
+};
 
 exports.updateJob = (toUpdate, job_id) => {
   // if (new Date() < new Date(toUpdate.expiry_date)) {
@@ -136,7 +148,7 @@ exports.fetchExistingUser = (phoneNumber) => {
   if (/^\d+$/.test(phoneNumber)) {
     return db
       .query(
-        `SELECT phone_number, first_name, surname, is_elder, postcode, avatar_url, profile_msg FROM users WHERE phone_number = $1;`,
+        `SELECT user_id, phone_number, first_name, surname, is_elder, postcode, avatar_url, profile_msg FROM users WHERE phone_number = $1;`,
         [phoneNumber]
       )
       .then(({ rows }) => {
